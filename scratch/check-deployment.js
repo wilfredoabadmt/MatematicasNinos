@@ -6,7 +6,7 @@ const headers = {
 };
 
 async function checkAppStatus() {
-  const appUuid = 'um83aewmwnu4te2t1zzgfebs';
+  const appUuid = 'ybs1mpaeauw4dopgbvgbvr2a';
   console.log(`Verificando estado de la aplicación ${appUuid}...`);
   const res = await fetch(`${BASE_URL}/applications/${appUuid}`, { headers });
   const data = await res.json();
