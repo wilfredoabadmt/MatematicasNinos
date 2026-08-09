@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3 \
     make \
     g++ \
+    libsqlite3-dev \
     && rm -rf /var/lib/apt/lists/* \
     && npm ci
 
