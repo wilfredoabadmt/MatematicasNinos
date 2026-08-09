@@ -18,6 +18,13 @@ const App: React.FC = () => {
   const [showPuzzle, setShowPuzzle] = useState<boolean>(false);
   const [showRegModal, setShowRegModal] = useState<boolean>(false);
 
+  const [parentEmail, setParentEmail] = useState<string>(() => {
+    return localStorage.getItem('dino_math_parent_email') || '';
+  });
+  const [isPaidParent, setIsPaidParent] = useState<boolean>(() => {
+    return localStorage.getItem('dino_math_is_paid') === 'true';
+  });
+
   // Perfiles de Jugador (Nombre y Apellido)
   const [profiles, setProfiles] = useState<PlayerProfile[]>(() => {
     const saved = localStorage.getItem('dino_math_profiles');
@@ -43,16 +50,96 @@ const App: React.FC = () => {
     }
   }, [activeProfileId]);
 
+  useEffect(() => {
+    if (parentEmail) {
+      localStorage.setItem('dino_math_parent_email', parentEmail);
+    }
+    localStorage.setItem('dino_math_is_paid', isPaidParent ? 'true' : 'false');
+  }, [parentEmail, isPaidParent]);
+
+  // Verificar correo del padre en la API del servidor
+  const handleVerifyParentEmail = async (email: string) => {
+    try {
+      const res = await fetch('/api/auth/check-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      if (!res.ok) throw new Error('Failed to verify');
+      const data = await res.json();
+      setParentEmail(data.email);
+      setIsPaidParent(data.isPaid);
+
+      // Cargar perfiles de niños guardados en la BD
+      if (data.isPaid) {
+        fetchProfilesFromDB(data.email);
+      }
+      return { isPaid: data.isPaid, email: data.email };
+    } catch (_e) {
+      // Fallback local si el servidor no responde
+      setParentEmail(email);
+      setIsPaidParent(true);
+      return { isPaid: true, email };
+    }
+  };
+
+  const fetchProfilesFromDB = async (email: string) => {
+    try {
+      const res = await fetch(`/api/profiles?email=${encodeURIComponent(email)}`);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.profiles && Array.isArray(data.profiles) && data.profiles.length > 0) {
+          setProfiles(data.profiles);
+          if (!activeProfileId) {
+            setActiveProfileId(data.profiles[0].id);
+          }
+        }
+      }
+    } catch (_e) {}
+  };
+
+  const handleTogglePaidStatus = async (email: string, isPaid: boolean) => {
+    try {
+      const res = await fetch('/api/auth/toggle-paid', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, isPaid }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setIsPaidParent(data.isPaid);
+        setParentEmail(data.email);
+      }
+    } catch (_e) {
+      setIsPaidParent(isPaid);
+      setParentEmail(email);
+    }
+  };
+
+  const syncProfileToDB = async (email: string, profile: PlayerProfile) => {
+    try {
+      await fetch('/api/profiles', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, profile }),
+      });
+    } catch (_e) {}
+  };
+
   const activityEggs = activeProfile?.activityEggs || { suma: 0, resta: 0, multiplicacion: 0, division: 0, completar: 0, comparar: 0 };
   const totalStars = activeProfile?.totalStars || 0;
   const totalEggs = Object.values(activityEggs).reduce((a, b) => a + b, 0);
 
-  const handleSaveProfile = (firstName: string, lastName: string) => {
+  const handleSaveProfile = (firstName: string, lastName: string, emailFromSplash?: string) => {
+    const effectiveEmail = emailFromSplash || parentEmail;
     const existing = profiles.find(p => p.firstName.toLowerCase() === firstName.toLowerCase() && p.lastName.toLowerCase() === lastName.toLowerCase());
+    
+    let targetProfile: PlayerProfile;
     if (existing) {
+      targetProfile = existing;
       setActiveProfileId(existing.id);
     } else {
-      const newProfile: PlayerProfile = {
+      targetProfile = {
         id: 'prof_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6),
         firstName,
         lastName,
@@ -61,9 +148,14 @@ const App: React.FC = () => {
         unlockedRewards: [],
         createdAt: new Date().toISOString(),
       };
-      setProfiles(prev => [...prev, newProfile]);
-      setActiveProfileId(newProfile.id);
+      setProfiles(prev => [...prev, targetProfile]);
+      setActiveProfileId(targetProfile.id);
     }
+
+    if (effectiveEmail) {
+      syncProfileToDB(effectiveEmail, targetProfile);
+    }
+
     setShowRegModal(false);
     setScreen('heroSelect');
   };
@@ -164,6 +256,10 @@ const App: React.FC = () => {
           activeProfile={activeProfile}
           existingProfiles={profiles}
           onSelectExistingProfile={handleSelectExistingProfile}
+          parentEmail={parentEmail}
+          isPaidParent={isPaidParent}
+          onVerifyParentEmail={handleVerifyParentEmail}
+          onTogglePaidStatus={handleTogglePaidStatus}
         />
       )}
       {screen === 'heroSelect' && (

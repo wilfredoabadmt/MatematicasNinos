@@ -4,10 +4,14 @@ import { speakAndWait, stopSpeaking, playSound } from '../utils/speech';
 import HeroAvatar from './HeroAvatar';
 
 interface SplashScreenProps {
-  onContinue: (firstName: string, lastName: string) => void;
+  onContinue: (firstName: string, lastName: string, parentEmail: string) => void;
   activeProfile?: PlayerProfile | null;
   existingProfiles?: PlayerProfile[];
   onSelectExistingProfile?: (profile: PlayerProfile) => void;
+  parentEmail?: string;
+  isPaidParent?: boolean;
+  onVerifyParentEmail?: (email: string) => Promise<{ isPaid: boolean; email: string }>;
+  onTogglePaidStatus?: (email: string, isPaid: boolean) => Promise<void>;
 }
 
 const SplashScreen: React.FC<SplashScreenProps> = ({
@@ -15,8 +19,17 @@ const SplashScreen: React.FC<SplashScreenProps> = ({
   activeProfile,
   existingProfiles = [],
   onSelectExistingProfile,
+  parentEmail: initialParentEmail = '',
+  isPaidParent: initialIsPaid = false,
+  onVerifyParentEmail,
+  onTogglePaidStatus,
 }) => {
   const [step, setStep] = useState(0);
+  const [parentEmail, setParentEmail] = useState(initialParentEmail);
+  const [isPaid, setIsPaid] = useState(initialIsPaid);
+  const [isEmailVerified, setIsEmailVerified] = useState(Boolean(initialParentEmail && initialIsPaid));
+  const [verifyingEmail, setVerifyingEmail] = useState(false);
+
   const [firstName, setFirstName] = useState(activeProfile?.firstName || '');
   const [lastName, setLastName] = useState(activeProfile?.lastName || '');
   const [error, setError] = useState('');
@@ -28,22 +41,64 @@ const SplashScreen: React.FC<SplashScreenProps> = ({
       setTimeout(() => setStep(3), 1500),
       setTimeout(() => {
         setStep(4);
-        const nameMsg = activeProfile ? `¡Bienvenido de nuevo ${activeProfile.firstName}!` : '¡Bienvenido a Dino Math! Escribe tu nombre para guardar tus premios.';
+        const nameMsg = activeProfile ? `¡Bienvenido de nuevo ${activeProfile.firstName}!` : '¡Bienvenido a Dino Math! Ingresa tu correo de padre para verificar tu suscripción.';
         speakAndWait(nameMsg);
       }, 1800),
     ];
     return () => timers.forEach(clearTimeout);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const handleVerifyEmail = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!parentEmail.trim() || !parentEmail.includes('@')) {
+      setError('¡Ingresa un correo electrónico válido de padre o tutor!');
+      return;
+    }
+    setError('');
+    setVerifyingEmail(true);
+    try {
+      if (onVerifyParentEmail) {
+        const res = await onVerifyParentEmail(parentEmail.trim());
+        setIsPaid(res.isPaid);
+        setIsEmailVerified(true);
+        if (res.isPaid) {
+          playSound('victory');
+          speakAndWait('¡Cuenta verificada con suscripción activa! Ahora ingresa el nombre de tu hijo.');
+        } else {
+          playSound('wrong');
+          speakAndWait('Tu cuenta aún no tiene suscripción activa. Activa tu pago para continuar.');
+        }
+      } else {
+        setIsPaid(true);
+        setIsEmailVerified(true);
+      }
+    } catch (_err) {
+      setError('Error al verificar el correo. Intenta de nuevo.');
+    } finally {
+      setVerifyingEmail(false);
+    }
+  };
+
+  const handleTogglePaidDemo = async () => {
+    if (!parentEmail.trim() || !onTogglePaidStatus) return;
+    try {
+      await onTogglePaidStatus(parentEmail.trim(), true);
+      setIsPaid(true);
+      setIsEmailVerified(true);
+      playSound('magic');
+      speakAndWait('¡Suscripción activada con éxito! Ahora puedes registrar a tus niños.');
+    } catch (_e) {}
+  };
+
   const handleStart = (e: React.FormEvent) => {
     e.preventDefault();
     if (!firstName.trim()) {
-      setError('¡Escribe tu nombre para guardar tus misiones y premios!');
+      setError('¡Escribe el nombre de tu niño/a para guardar sus misiones y premios!');
       return;
     }
     playSound('magic');
     stopSpeaking();
-    onContinue(firstName.trim(), lastName.trim());
+    onContinue(firstName.trim(), lastName.trim(), parentEmail.trim());
   };
 
   return (
@@ -92,84 +147,153 @@ const SplashScreen: React.FC<SplashScreenProps> = ({
           </p>
         </div>
 
-        {/* Formulario de Registro de Nombre y Apellido */}
-        <div className={`my-3 bg-amber-50/95 backdrop-blur-md rounded-2xl sm:rounded-3xl p-4 border-2 border-amber-300 shadow-2xl transition-all duration-1000 ${step >= 3 ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
-          <div className="flex items-center justify-center gap-1.5 mb-2 text-emerald-950 font-bold text-xs sm:text-sm" style={{ fontFamily: "'Fredoka One', cursive" }}>
-            <span>📝</span>
-            <span>REGISTRO DE CAMPEÓN MATEMÁTICO</span>
-          </div>
+        {/* PASO 1: Verificación de Correo Electrónico del Padre */}
+        {!isEmailVerified || !isPaid ? (
+          <div className={`my-3 bg-amber-50/95 backdrop-blur-md rounded-2xl sm:rounded-3xl p-4 border-2 border-amber-300 shadow-2xl transition-all duration-1000 ${step >= 3 ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
+            <div className="flex items-center justify-center gap-1.5 mb-2 text-emerald-950 font-bold text-xs sm:text-sm" style={{ fontFamily: "'Fredoka One', cursive" }}>
+              <span>📧</span>
+              <span>VERIFICACIÓN DE PADRE O TUTOR</span>
+            </div>
 
-          <form onSubmit={handleStart} className="space-y-2 text-left">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <form onSubmit={handleVerifyEmail} className="space-y-2 text-left">
               <div>
                 <label className="block text-[11px] font-bold text-amber-950 mb-0.5" style={{ fontFamily: "'Fredoka One', cursive" }}>
-                  👤 Nombre del Niño/a:
+                  ✉️ Correo Electrónico Registrado:
                 </label>
                 <input
-                  type="text"
-                  value={firstName}
-                  onChange={e => { setFirstName(e.target.value); setError(''); }}
-                  placeholder="Ej: Mateo"
+                  type="email"
+                  value={parentEmail}
+                  onChange={e => { setParentEmail(e.target.value); setError(''); }}
+                  placeholder="Ej: papa@ejemplo.com"
                   className="w-full bg-white border border-amber-300 focus:border-emerald-500 rounded-xl py-2 px-3 text-xs sm:text-sm font-bold text-emerald-950 shadow-inner outline-none"
                   style={{ fontFamily: "'Nunito', sans-serif" }}
                   required
                 />
               </div>
 
-              <div>
-                <label className="block text-[11px] font-bold text-amber-950 mb-0.5" style={{ fontFamily: "'Fredoka One', cursive" }}>
-                  🐾 Apellido:
-                </label>
-                <input
-                  type="text"
-                  value={lastName}
-                  onChange={e => setLastName(e.target.value)}
-                  placeholder="Ej: Ramírez"
-                  className="w-full bg-white border border-amber-300 focus:border-emerald-500 rounded-xl py-2 px-3 text-xs sm:text-sm font-bold text-emerald-950 shadow-inner outline-none"
-                  style={{ fontFamily: "'Nunito', sans-serif" }}
-                />
-              </div>
-            </div>
+              {error && (
+                <p className="text-[11px] text-red-600 font-extrabold text-center animate-shake" style={{ fontFamily: "'Nunito', sans-serif" }}>
+                  {error}
+                </p>
+              )}
 
-            {error && (
-              <p className="text-[11px] text-red-600 font-extrabold text-center animate-shake" style={{ fontFamily: "'Nunito', sans-serif" }}>
-                {error}
-              </p>
-            )}
-
-            <button type="submit"
-              className="w-full bg-gradient-to-r from-amber-400 via-emerald-500 to-teal-600 text-white rounded-xl py-3 text-sm sm:text-base font-bold
-                transform hover:scale-105 active:scale-95 transition-all shadow-xl animate-pulse border border-white/30
-                flex items-center justify-center gap-2 whitespace-nowrap mt-2"
-              style={{ fontFamily: "'Fredoka One', cursive" }}>
-              <span>🌋</span>
-              <span>¡GUARDAR PERFIL Y ENTRAR AL VALLE!</span>
-              <span>🌋</span>
-            </button>
-          </form>
-
-          {/* Selección de Jugador Existente */}
-          {existingProfiles.length > 0 && onSelectExistingProfile && (
-            <div className="mt-3 border-t border-amber-200/80 pt-2 text-left">
-              <p className="text-[11px] font-bold text-amber-900 mb-1" style={{ fontFamily: "'Fredoka One', cursive" }}>
-                👥 O seleccionar perfil guardado:
-              </p>
-              <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto">
-                {existingProfiles.map(p => (
+              {isEmailVerified && !isPaid && (
+                <div className="bg-red-100 border border-red-300 rounded-xl p-2.5 my-2 text-center text-red-950 space-y-1.5">
+                  <p className="text-xs font-black" style={{ fontFamily: "'Fredoka One', cursive" }}>
+                    ⚠️ CUENTA PENDIENTE DE PAGO
+                  </p>
+                  <p className="text-[11px] font-bold leading-tight" style={{ fontFamily: "'Nunito', sans-serif" }}>
+                    Tu correo <span className="underline font-black">{parentEmail}</span> no registra una suscripción de pago activa.
+                  </p>
                   <button
-                    key={p.id}
-                    onClick={() => { playSound('click'); onSelectExistingProfile(p); }}
-                    className="bg-emerald-100 hover:bg-emerald-200 text-emerald-950 rounded-lg px-2.5 py-1 text-[11px] font-bold shadow-xs flex items-center gap-1 border border-emerald-300"
-                    style={{ fontFamily: "'Nunito', sans-serif" }}
+                    type="button"
+                    onClick={handleTogglePaidDemo}
+                    className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-lg py-1.5 text-xs font-extrabold shadow-md hover:scale-102 active:scale-98 transition-all"
+                    style={{ fontFamily: "'Fredoka One', cursive" }}
                   >
-                    <span>👤</span>
-                    <span>{p.firstName} {p.lastName}</span>
+                    ⚡ ACTIVAR SUSCRIPCIÓN (MODO DEMO/PRUEBA)
                   </button>
-                ))}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={verifyingEmail}
+                className="w-full bg-gradient-to-r from-amber-500 via-emerald-500 to-teal-600 text-white rounded-xl py-3 text-xs sm:text-sm font-bold
+                  transform hover:scale-105 active:scale-95 transition-all shadow-xl border border-white/30
+                  flex items-center justify-center gap-2 whitespace-nowrap"
+                style={{ fontFamily: "'Fredoka One', cursive" }}
+              >
+                <span>🔎</span>
+                <span>{verifyingEmail ? 'VERIFICANDO...' : 'VERIFICAR SUSCRIPCIÓN Y ACCESO'}</span>
+              </button>
+            </form>
+          </div>
+        ) : (
+          /* PASO 2: Formulario de Registro de Nombre y Apellido del Niño */
+          <div className={`my-3 bg-amber-50/95 backdrop-blur-md rounded-2xl sm:rounded-3xl p-4 border-2 border-amber-300 shadow-2xl transition-all duration-1000 ${step >= 3 ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
+            <div className="flex items-center justify-between gap-1.5 mb-2 text-emerald-950 font-bold text-xs sm:text-sm border-b border-amber-200 pb-1.5" style={{ fontFamily: "'Fredoka One', cursive" }}>
+              <div className="flex items-center gap-1">
+                <span>📝</span>
+                <span>REGISTRO DE CAMPEÓN MATEMÁTICO</span>
               </div>
+              <span className="text-[10px] bg-emerald-100 text-emerald-800 rounded-full px-2 py-0.5 font-bold border border-emerald-300">
+                ✔ {parentEmail} (PAGADO)
+              </span>
             </div>
-          )}
-        </div>
+
+            <form onSubmit={handleStart} className="space-y-2 text-left">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div>
+                  <label className="block text-[11px] font-bold text-amber-950 mb-0.5" style={{ fontFamily: "'Fredoka One', cursive" }}>
+                    👤 Nombre del Niño/a:
+                  </label>
+                  <input
+                    type="text"
+                    value={firstName}
+                    onChange={e => { setFirstName(e.target.value); setError(''); }}
+                    placeholder="Ej: Mateo"
+                    className="w-full bg-white border border-amber-300 focus:border-emerald-500 rounded-xl py-2 px-3 text-xs sm:text-sm font-bold text-emerald-950 shadow-inner outline-none"
+                    style={{ fontFamily: "'Nunito', sans-serif" }}
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-bold text-amber-950 mb-0.5" style={{ fontFamily: "'Fredoka One', cursive" }}>
+                    🐾 Apellido:
+                  </label>
+                  <input
+                    type="text"
+                    value={lastName}
+                    onChange={e => setLastName(e.target.value)}
+                    placeholder="Ej: Ramírez"
+                    className="w-full bg-white border border-amber-300 focus:border-emerald-500 rounded-xl py-2 px-3 text-xs sm:text-sm font-bold text-emerald-950 shadow-inner outline-none"
+                    style={{ fontFamily: "'Nunito', sans-serif" }}
+                  />
+                </div>
+              </div>
+
+              {error && (
+                <p className="text-[11px] text-red-600 font-extrabold text-center animate-shake" style={{ fontFamily: "'Nunito', sans-serif" }}>
+                  {error}
+                </p>
+              )}
+
+              <button type="submit"
+                className="w-full bg-gradient-to-r from-amber-400 via-emerald-500 to-teal-600 text-white rounded-xl py-3 text-sm sm:text-base font-bold
+                  transform hover:scale-105 active:scale-95 transition-all shadow-xl animate-pulse border border-white/30
+                  flex items-center justify-center gap-2 whitespace-nowrap mt-2"
+                style={{ fontFamily: "'Fredoka One', cursive" }}>
+                <span>🌋</span>
+                <span>¡GUARDAR NIÑO Y ENTRAR AL VALLE!</span>
+                <span>🌋</span>
+              </button>
+            </form>
+
+            {/* Selección de Jugador Existente */}
+            {existingProfiles.length > 0 && onSelectExistingProfile && (
+              <div className="mt-3 border-t border-amber-200/80 pt-2 text-left">
+                <p className="text-[11px] font-bold text-amber-900 mb-1" style={{ fontFamily: "'Fredoka One', cursive" }}>
+                  👥 O seleccionar perfil guardado de {parentEmail}:
+                </p>
+                <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto">
+                  {existingProfiles.map(p => (
+                    <button
+                      key={p.id}
+                      onClick={() => { playSound('click'); onSelectExistingProfile(p); }}
+                      className="bg-emerald-100 hover:bg-emerald-200 text-emerald-950 rounded-lg px-2.5 py-1 text-[11px] font-bold shadow-xs flex items-center gap-1 border border-emerald-300"
+                      style={{ fontFamily: "'Nunito', sans-serif" }}
+                    >
+                      <span>👤</span>
+                      <span>{p.firstName} {p.lastName}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Mockups de Premios */}
         <div className={`mb-3 bg-gradient-to-r from-amber-500/90 via-yellow-500/90 to-amber-600/90 backdrop-blur-md rounded-2xl p-2.5 border border-amber-300 shadow-xl transition-all duration-1000 ${step >= 3 ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>

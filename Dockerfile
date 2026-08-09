@@ -1,4 +1,4 @@
-# Multi-stage Dockerfile para desplegar Dino Math en Coolify / Nginx
+# Multi-stage Dockerfile para servidor Node.js + Express + SQLite + Vite SPA en Coolify
 FROM node:20-alpine AS build
 WORKDIR /app
 
@@ -8,7 +8,25 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-FROM nginx:alpine AS runner
-COPY --from=build /app/dist /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# Producción: Servidor Express con persistencia SQLite
+FROM node:20-alpine AS runner
+WORKDIR /app
+
+ENV NODE_ENV=production
+ENV PORT=3000
+ENV DATABASE_DIR=/app/data
+
+# Instalar dependencias necesarias para better-sqlite3 y compilación nativa en Alpine
+RUN apk add --no-舆 python3 make g++ sqlite-dev || true
+
+COPY package*.json ./
+RUN npm ci --only=production
+
+COPY --from=build /app/dist ./dist
+COPY server.js ./
+
+RUN mkdir -p /app/data
+
+EXPOSE 3000
+
+CMD ["node", "server.js"]

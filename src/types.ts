@@ -12,11 +12,18 @@ export interface Question {
   teachSpeech: string;
 }
 
+export interface ParentUser {
+  email: string;
+  isPaid: boolean;
+  subscriptionStatus: string;
+}
+
 export interface PlayerProfile {
   id: string;
   firstName: string;
   lastName: string;
   totalStars: number;
+  totalEggs?: number;
   activityEggs: Record<string, number>;
   unlockedRewards: string[];
   createdAt: string;
