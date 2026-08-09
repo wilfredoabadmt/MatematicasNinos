@@ -16,7 +16,7 @@ ENV NODE_ENV=production
 ENV PORT=3000
 ENV DATABASE_DIR=/app/data
 
-# Instalar curl (requerido por Coolify para el Health Check) y herramientas para better-sqlite3
+# Instalar herramientas del sistema para compilar native modules (better-sqlite3)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     python3 \
@@ -27,7 +27,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 COPY package*.json ./
-RUN npm ci --only=production
+RUN npm ci --only=production && npm rebuild better-sqlite3
 
 COPY --from=build /app/dist ./dist
 COPY server.js ./
