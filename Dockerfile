@@ -17,7 +17,7 @@ ENV PORT=3000
 ENV DATABASE_DIR=/app/data
 
 # Instalar dependencias necesarias para better-sqlite3 y compilación nativa en Alpine
-RUN apk add --no-舆 python3 make g++ sqlite-dev || true
+RUN apk add --no-cache python3 make g++ sqlite-dev || true
 
 COPY package*.json ./
 RUN npm ci --only=production
