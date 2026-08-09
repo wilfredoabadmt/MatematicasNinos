@@ -1,5 +1,5 @@
 # Multi-stage Dockerfile para servidor Node.js + Express + SQLite + Vite SPA en Coolify
-FROM node:20-slim AS build
+FROM node:22-slim AS build
 WORKDIR /app
 
 COPY package*.json ./
@@ -9,7 +9,7 @@ COPY . .
 RUN npm run build
 
 # Producción: Servidor Express en Puerto 3000 para Coolify Traefik
-FROM node:20-slim AS runner
+FROM node:22-slim AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
