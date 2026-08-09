@@ -1,0 +1,16 @@
+node_modules
+dist
+data
+*.db
+.git
+.env
+.env.local
+.env.*.local
+scratch
+npm-debug.log*
+*.log
+.DS_Store
+Thumbs.db
+.gitignore
+docker-compose.yml
+*.md
