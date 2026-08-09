@@ -16,6 +16,15 @@ ENV NODE_ENV=production
 ENV PORT=80
 ENV DATABASE_DIR=/app/data
 
+# Instalar dependencias del sistema para compilar better-sqlite3
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3 \
+    make \
+    g++ \
+    sqlite3 \
+    libsqlite3-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY package*.json ./
 RUN npm ci --only=production
 
