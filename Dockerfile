@@ -1,5 +1,5 @@
 # Multi-stage Dockerfile para servidor Node.js + Express + SQLite + Vite SPA en Coolify
-FROM node:22-slim AS build
+FROM node:20-slim AS build
 WORKDIR /app
 
 COPY package*.json ./
@@ -8,12 +8,12 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-# Producción: Servidor Express en Puerto 80 para Coolify / Traefik
-FROM node:22-slim AS runner
+# Producción: Servidor Express en Puerto 3000 para Coolify Traefik
+FROM node:20-slim AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
-ENV PORT=80
+ENV PORT=3000
 ENV DATABASE_DIR=/app/data
 
 # Instalar dependencias del sistema para compilar better-sqlite3
@@ -33,6 +33,6 @@ COPY server.js ./
 
 RUN mkdir -p /app/data
 
-EXPOSE 80
+EXPOSE 3000
 
 CMD ["node", "server.js"]

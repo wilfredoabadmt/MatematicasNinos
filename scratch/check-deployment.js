@@ -6,7 +6,7 @@ const headers = {
 };
 
 async function checkAppStatus() {
-  const appUuid = 'ybs1mpaeauw4dopgbvgbvr2a';
+  const appUuid = 'um83aewmwnu4te2t1zzgfebs';
   console.log(`Verificando estado de la aplicación ${appUuid}...`);
   const res = await fetch(`${BASE_URL}/applications/${appUuid}`, { headers });
   const data = await res.json();
@@ -15,7 +15,6 @@ async function checkAppStatus() {
   console.log('Estado:', data.status);
   console.log('URL pública:', data.fqdn);
   console.log('Build Pack:', data.build_pack);
-  console.log('Puertos:', data.ports_exposes);
 }
 
 checkAppStatus().catch(console.error);

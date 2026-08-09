@@ -6,7 +6,7 @@ const headers = {
 };
 
 async function viewLogs() {
-  const appUuid = 'ybs1mpaeauw4dopgbvgbvr2a';
+  const appUuid = 'um83aewmwnu4te2t1zzgfebs';
   console.log('--- Obteniendo Logs de Aplicación ---');
   const resLogs = await fetch(`${BASE_URL}/applications/${appUuid}/logs`, { headers });
   const logsData = await resLogs.json();
