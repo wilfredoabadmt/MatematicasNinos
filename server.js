@@ -14,6 +14,18 @@ const PORT = process.env.PORT || 80;
 app.use(cors());
 app.use(express.json());
 
+// Endpoint de salud para Coolify / Docker
+app.get('/health', (_req, res) => {
+  res.status(200).json({ status: 'healthy', timestamp: new Date().toISOString() });
+});
+
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+});
+process.on('unhandledRejection', (reason) => {
+  console.error('Unhandled Rejection:', reason);
+});
+
 // Directorio de persistencia para la base de datos (Volumen en Docker/Coolify)
 const dataDir = process.env.DATABASE_DIR || path.join(__dirname, 'data');
 if (!fs.existsSync(dataDir)) {
