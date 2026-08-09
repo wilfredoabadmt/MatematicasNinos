@@ -16,8 +16,9 @@ ENV NODE_ENV=production
 ENV PORT=3000
 ENV DATABASE_DIR=/app/data
 
-# Instalar dependencias del sistema para compilar better-sqlite3
+# Instalar curl (requerido por Coolify para el Health Check) y herramientas para better-sqlite3
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
     python3 \
     make \
     g++ \
