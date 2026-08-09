@@ -49,11 +49,24 @@ export const cleanTextForSpeech = (text: string): string => {
 };
 
 // ─── ElevenLabs: voz real carismática y expresiva ───
+// Daniela: mujer joven latinoamericana, energética, alegre y motivadora
 const VOICE_ID = 'ajOR9IDAaubDK5qtLUqQ';
-const API_KEY = 'sk_7459c04760770cce19a02a605edbd60102ac07908f85fa08';
+const DEFAULT_API_KEY = (import.meta.env.VITE_ELEVENLABS_API_KEY as string | undefined) || 'sk_7459c04760770cce19a02a605edbd60102ac07908f85fa08';
+
+// Prioridad: clave pegada por el jugador > variable de entorno > clave por defecto
+const getApiKey = (): string => {
+  try {
+    const userKey = localStorage.getItem('dino_elevenlabs_api_key')?.trim();
+    return userKey || DEFAULT_API_KEY;
+  } catch (_e) {
+    return DEFAULT_API_KEY;
+  }
+};
+
 const audioCache = new Map<string, string>();
 
 const speakElevenLabs = async (text: string): Promise<boolean> => {
+  const API_KEY = getApiKey();
   if (!API_KEY || !text) return false;
 
   const cacheKey = text.trim().toLowerCase();
@@ -68,9 +81,9 @@ const speakElevenLabs = async (text: string): Promise<boolean> => {
           text,
           model_id: 'eleven_multilingual_v2',
           voice_settings: {
-            stability: 0.22,         // Muy baja: máxima expresividad, entusiasmo y carisma
-            similarity_boost: 0.80,
-            style: 0.75,             // Muy alta: alegría desbordante, motivación y energía
+            stability: 0.15,         // Baja: máxima expresividad, entusiasmo y carisma
+            similarity_boost: 0.86,
+            style: 0.88,             // Muy alta: alegría desbordante, motivación y energía
             use_speaker_boost: true,
           },
         }),
@@ -86,7 +99,8 @@ const speakElevenLabs = async (text: string): Promise<boolean> => {
 
   try {
     const audio = new Audio(audioUrl);
-    audio.playbackRate = 1.05;
+    audio.playbackRate = 1.12;
+    audio.volume = 1;
     currentAudioElement = audio;
     return new Promise((resolve) => {
       audio.onended = () => resolve(true);
@@ -129,8 +143,8 @@ const speakFallbackTTS = (text: string) => {
   try {
     const u = new SpeechSynthesisUtterance(text);
     u.lang = 'es-419';
-    u.rate = 1.12;
-    u.pitch = 1.55;
+    u.rate = 1.18;
+    u.pitch = 1.65;
     u.volume = 1;
     const voice = getBestVoice();
     if (voice) u.voice = voice;
@@ -198,8 +212,8 @@ export const speakAndWait = (text: string): Promise<void> => {
       try {
         const u = new SpeechSynthesisUtterance(clean);
         u.lang = 'es-419';
-        u.rate = 1.12;
-        u.pitch = 1.55;
+        u.rate = 1.18;
+        u.pitch = 1.65;
         u.volume = 1;
         const voice = getBestVoice();
         if (voice) u.voice = voice;
