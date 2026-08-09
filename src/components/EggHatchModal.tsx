@@ -17,8 +17,8 @@ const EggHatchModal: React.FC<EggHatchModalProps> = ({ hero, milestone, playerNa
   const [hatched, setHatched] = useState(false);
 
   React.useEffect(() => {
-    const greetingName = playerName ? `${playerName}` : 'amiguito';
-    speakAndWait(`¡Toca el huevo tres veces para descubrir tu premio sorpresa, ${greetingName}!`);
+    const greetingName = playerName ? `${playerName}` : 'campeón';
+    speakAndWait(`¡Toca el huevo tres veces con entusiasmo para descubrir tu regalo sorpresa, ${greetingName}!`);
   }, [playerName]);
 
   const getRewardInfo = () => {
@@ -71,7 +71,7 @@ const EggHatchModal: React.FC<EggHatchModalProps> = ({ hero, milestone, playerNa
       setHatched(true);
       playSound('victory');
       const greetingName = playerName ? `${playerName}` : 'campeón';
-      speakAndWait(`¡Wao, felicidades ${greetingName}! ¡El huevo se rompió y ganaste tu ${reward.title}! ¡Eres un verdadero súper campeón jurásico!`);
+      speakAndWait(`¡Muchas felicidades, ${greetingName}! El huevo ha eclosionado y acabas de ganar tu ${reward.title}. ¡Excelente logro!`);
     }
   };
 

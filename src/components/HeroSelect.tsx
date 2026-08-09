@@ -12,8 +12,8 @@ interface HeroSelectProps {
 const HeroSelect: React.FC<HeroSelectProps> = ({ onSelectHero, activeProfile }) => {
   useEffect(() => {
     setTimeout(() => {
-      const greetingName = activeProfile ? `${activeProfile.firstName}` : 'amiguito';
-      speakAndWait(`¡Hola ${greetingName}! Soy Daniela. ¡Elige a tu dinosaurio compañero favorito para comenzar!`);
+      const greetingName = activeProfile ? `${activeProfile.firstName}` : 'amigo';
+      speakAndWait(`¡Hola, ${greetingName}! Te saluda Daniela. Elige a tu dinosaurio compañero favorito para comenzar esta gran aventura.`);
     }, 400);
     return () => stopSpeaking();
   }, [activeProfile]);
@@ -39,7 +39,7 @@ const HeroSelect: React.FC<HeroSelectProps> = ({ onSelectHero, activeProfile }) 
           <p className="text-base text-emerald-100 font-semibold" style={{ fontFamily: "'Nunito', sans-serif" }}>
             🐾 ¿Quién será tu amiguito hoy? 🐾
           </p>
-          <button onClick={() => speakAndWait('¡Elige tu dinosaurio jurásico!')}
+          <button onClick={() => speakAndWait('Elige a tu dinosaurio compañero favorito para comenzar.')}
             className="mt-2 text-3xl hover:scale-125 transition-transform" title="Escuchar">
             🔊
           </button>

@@ -18,18 +18,18 @@ interface MainMenuProps {
 }
 
 const gameCategories = [
-  { mode: 'suma' as GameMode, title: 'Sumas Jurásicas', emoji: '➕', color: 'from-emerald-500 to-green-700', description: '¡Sumemos juntos!', speech: '¡Vamos a sumar!' },
-  { mode: 'resta' as GameMode, title: 'Restas de Dinosaurio', emoji: '➖', color: 'from-amber-500 to-orange-700', description: '¡Resta y aprende!', speech: '¡Hora de restar!' },
-  { mode: 'multiplicacion' as GameMode, title: 'Multiplicar Nidos', emoji: '✖️', color: 'from-purple-500 to-indigo-700', description: '¡Suma grupos iguales!', speech: '¡A multiplicar!' },
-  { mode: 'division' as GameMode, title: 'Repartir Frutas', emoji: '➗', color: 'from-teal-500 to-cyan-700', description: '¡Reparte en partes iguales!', speech: '¡Vamos a dividir!' },
-  { mode: 'completar' as GameMode, title: 'Huevos Escondidos', emoji: '🧩', color: 'from-rose-500 to-pink-700', description: '¡Descubre lo que falta!', speech: '¡Busca el número oculto!' },
-  { mode: 'comparar' as GameMode, title: '¿Quién es Mayor?', emoji: '⚖️', color: 'from-amber-600 to-yellow-700', description: '¡Encuentra el más grande!', speech: '¡Comparemos números!' },
+  { mode: 'suma' as GameMode, title: 'Sumas Jurásicas', emoji: '➕', color: 'from-emerald-500 to-green-700', description: '¡Sumemos juntos!', speech: '¡Excelente elección! Vamos a practicar Sumas Jurásicas.' },
+  { mode: 'resta' as GameMode, title: 'Restas de Dinosaurio', emoji: '➖', color: 'from-amber-500 to-orange-700', description: '¡Resta y aprende!', speech: '¡Genial! Es momento de resolver Restas de Dinosaurio.' },
+  { mode: 'multiplicacion' as GameMode, title: 'Multiplicar Nidos', emoji: '✖️', color: 'from-purple-500 to-indigo-700', description: '¡Suma grupos iguales!', speech: '¡Fantástico! Vamos a Multiplicar Nidos.' },
+  { mode: 'division' as GameMode, title: 'Repartir Frutas', emoji: '➗', color: 'from-teal-500 to-cyan-700', description: '¡Reparte en partes iguales!', speech: '¡Estupendo! Vamos a Repartir Frutas con mucha diversión.' },
+  { mode: 'completar' as GameMode, title: 'Huevos Escondidos', emoji: '🧩', color: 'from-rose-500 to-pink-700', description: '¡Descubre lo que falta!', speech: '¡Un gran desafío! Vamos a encontrar los Huevos Escondidos.' },
+  { mode: 'comparar' as GameMode, title: '¿Quién es Mayor?', emoji: '⚖️', color: 'from-amber-600 to-yellow-700', description: '¡Encuentra el más grande!', speech: '¡Me encanta! Vamos a comparar números y encontrar la cifra mayor.' },
 ];
 
 const difficulties = [
-  { value: 'facil' as Difficulty, label: '🥚 Bebé Dino (Fácil)', sub: 'Números chiquitos (1° y 2°)', color: 'from-emerald-500 to-green-600', speech: 'Nivel Bebé Dino.' },
-  { value: 'medio' as Difficulty, label: '🦕 Dino Joven (Medio)', sub: 'Desafío medio (3° y 4°)', color: 'from-amber-500 to-orange-600', speech: 'Nivel Dino Joven.' },
-  { value: 'dificil' as Difficulty, label: 'REX T-Rex Máster (Difícil)', sub: 'Para campeones (5° y 6°)', color: 'from-red-500 to-rose-700', speech: 'Nivel T-Rex Máster.' },
+  { value: 'facil' as Difficulty, label: '🥚 Bebé Dino (Fácil)', sub: 'Números chiquitos (1° y 2°)', color: 'from-emerald-500 to-green-600', speech: 'Seleccionaste el nivel Bebé Dino.' },
+  { value: 'medio' as Difficulty, label: '🦕 Dino Joven (Medio)', sub: 'Desafío medio (3° y 4°)', color: 'from-amber-500 to-orange-600', speech: 'Seleccionaste el nivel Dino Joven.' },
+  { value: 'dificil' as Difficulty, label: 'REX T-Rex Máster (Difícil)', sub: 'Para campeones (5° y 6°)', color: 'from-red-500 to-rose-700', speech: 'Seleccionaste el nivel T-Rex Máster. ¡A demostrar todo tu talento!' },
 ];
 
 const MainMenu: React.FC<MainMenuProps> = ({ 
@@ -52,7 +52,7 @@ const MainMenu: React.FC<MainMenuProps> = ({
   const fullName = activeProfile ? `${activeProfile.firstName} ${activeProfile.lastName}`.trim() : 'Campeón Jurásico';
 
   useEffect(() => {
-    const greeting = activeProfile ? `¡Hola ${activeProfile.firstName}! ¡Elige tu misión jurásica!` : `¡Elige tu misión jurásica!`;
+    const greeting = activeProfile ? `¡Hola ${activeProfile.firstName}! Qué gran alegría verte. Elige tu misión matemática favorita para comenzar.` : `¡Hola! Qué alegría saludarte. Elige tu misión matemática favorita para comenzar.`;
     setSpeechText(greeting);
     return () => stopSpeaking();
   }, [hero, activeProfile]);

@@ -54,11 +54,11 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
     const speakResults = async () => {
       await new Promise(r => setTimeout(r, 600));
       setHeroTalking(true);
-      const nameText = activeProfile ? `¡Excelente trabajo ${activeProfile.firstName}! ` : '';
+      const nameText = activeProfile ? `${activeProfile.firstName}` : 'campeón';
       if (isPDFUnlocked) {
-        await speakAndWait(`¡Wao! ${nameText}${hero.victoryMessage} ¡Completaste 5 huevos jurásicos y desbloqueaste tu regalo especial en PDF listo para imprimir y pintar! ¡Eres genial!`);
+        await speakAndWait(`¡Excelente trabajo, ${nameText}! ${hero.victoryMessage} ¡Alcanzaste 5 huevos jurásicos y desbloqueaste tu regalo especial en PDF listo para colorear! ¡Espléndido resultado!`);
       } else {
-        await speakAndWait(`¡Qué maravilla! ${nameText}${hero.victoryMessage} ¡Ganaste ${earnedStars} estrellas brillantes y un nuevo huevo jurásico! ¡Sigue jugando para liberar tus premios!`);
+        await speakAndWait(`¡Qué maravilla, ${nameText}! ${hero.victoryMessage} Ganaste ${earnedStars} estrellas brillantes y un nuevo huevo jurásico. ¡Sigue adelante para desbloquear más sorpresas!`);
       }
       setHeroTalking(false);
     };
@@ -94,9 +94,9 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
     stopSpeaking();
     setHeroTalking(true);
     if (isPDFUnlocked) {
-      await speakAndWait(`${hero.victoryMessage} ¡Toca el botón dorado para descargar tu lámina para colorear!`);
+      await speakAndWait(`${hero.victoryMessage} Toca el botón dorado para descargar tu lámina para colorear.`);
     } else {
-      await speakAndWait(`Tienes ${currentModeEggs} de 5 huevos para tu lámina PDF. ¡Sigue jugando!`);
+      await speakAndWait(`Llevas acumulados ${currentModeEggs} de 5 huevos para desbloquear tu lámina PDF. ¡Sigue jugando con mucho entusiasmo!`);
     }
     setHeroTalking(false);
   };

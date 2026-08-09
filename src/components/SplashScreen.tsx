@@ -41,7 +41,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({
       setTimeout(() => setStep(3), 1500),
       setTimeout(() => {
         setStep(4);
-        const nameMsg = activeProfile ? `¡Bienvenido de nuevo ${activeProfile.firstName}!` : '¡Bienvenido a Dino Math! Ingresa tu correo de padre para verificar tu suscripción.';
+        const nameMsg = activeProfile ? `¡Hola de nuevo, ${activeProfile.firstName}! Qué gran gusto tenerte de regreso en Dino Math.` : '¡Te doy la cordial bienvenida a Dino Math! Por favor, ingresa el correo electrónico de tu padre o tutor para verificar tu suscripción.';
         speakAndWait(nameMsg);
       }, 1800),
     ];
@@ -63,10 +63,10 @@ const SplashScreen: React.FC<SplashScreenProps> = ({
         setIsEmailVerified(true);
         if (res.isPaid) {
           playSound('victory');
-          speakAndWait('¡Cuenta verificada con suscripción activa! Ahora ingresa el nombre de tu hijo.');
+          speakAndWait('¡Excelente! Tu cuenta está verificada con suscripción activa. Ahora, ingresa el nombre de tu niño o niña para continuar.');
         } else {
           playSound('wrong');
-          speakAndWait('Tu cuenta aún no tiene suscripción activa. Activa tu pago para continuar.');
+          speakAndWait('Tu cuenta aún no registra una suscripción activa. Por favor activa tu pago para acceder a todo el contenido.');
         }
       } else {
         setIsPaid(true);
@@ -86,7 +86,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({
       setIsPaid(true);
       setIsEmailVerified(true);
       playSound('magic');
-      speakAndWait('¡Suscripción activada con éxito! Ahora puedes registrar a tus niños.');
+      speakAndWait('¡Fantástico! Suscripción activada con éxito. Ahora puedes registrar a tus pequeños campeones.');
     } catch (_e) {}
   };
 

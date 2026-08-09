@@ -15,7 +15,7 @@ const DinoPuzzleModal: React.FC<DinoPuzzleModalProps> = ({ hero, onClose }) => {
   // Mezclar rompecabezas al abrir
   useEffect(() => {
     shufflePuzzle();
-    speakAndWait(`¡Desafío de Rompecabezas de ${hero.name}! Toca dos piezas para intercambiarlas y armar la imagen.`);
+    speakAndWait(`¡Te presento el Desafío de Rompecabezas de ${hero.name}! Toca dos piezas para intercambiarlas de lugar y completar la imagen.`);
   }, [hero]);
 
   const shufflePuzzle = () => {
@@ -47,7 +47,7 @@ const DinoPuzzleModal: React.FC<DinoPuzzleModalProps> = ({ hero, onClose }) => {
         if (isSolvedNow) {
           setSolved(true);
           playSound('victory');
-          speakAndWait(`¡Increíble! ¡Completaste el rompecabezas jurásico de ${hero.name}!`);
+          speakAndWait(`¡Espectacular! Completaste exitosamente el rompecabezas jurásico de ${hero.name}. ¡Gran demostración de talento!`);
         }
       }
       setSelectedIdx(null);

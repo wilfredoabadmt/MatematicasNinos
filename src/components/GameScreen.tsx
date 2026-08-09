@@ -36,12 +36,12 @@ const modeColors: Record<string, string> = {
 };
 
 const modeInstructions: Record<string, string> = {
-  suma: '¡Hola! Te enseñaré a resolver Sumas Jurásicas. Sumar es juntar dos cantidades para saber cuántos objetos hay en total. Cuenta los objetos en la pantalla, suma las dos cantidades y toca el botón con el número correcto. ¡Tú puedes!',
-  resta: '¡Hola! Te enseñaré a resolver Restas de Dinosaurio. Restar es quitar una cantidad a otra para saber cuántos quedan. Cuenta cuántos dinosaurios u objetos quedan al final y elige la respuesta.',
-  multiplicacion: '¡Hola! Te enseñaré a Multiplicar Nidos. Multiplicar es sumar grupos con la misma cantidad de elementos. Cuenta cuántos grupos hay y cuántos elementos tiene cada grupo. ¡Es muy fácil!',
-  division: '¡Hola! Te enseñaré a Repartir Frutas. Dividir es repartir cosas en partes exactamente iguales entre varios dinosaurios. Cuenta cuántas frutas le tocan a cada uno.',
-  completar: '¡Hola! Te enseñaré a jugar a Huevos Escondidos. Aquí debes encontrar el número oculto que falta para completar la ecuación. Cuenta de cuánto en cuánto falta para llegar al total.',
-  comparar: '¡Hola! Te enseñaré a comparar números. Mira los dos números o grupos de objetos en la pantalla y selecciona el número que sea más grande.',
+  suma: 'Hoy te voy a explicar cómo resolver Sumas Jurásicas. Sumar es juntar dos cantidades para conocer el total. Cuenta los objetos en pantalla, suma ambas partes y selecciona la respuesta correcta. ¡Sé que te irá genial!',
+  resta: 'Hoy te voy a explicar cómo resolver Restas de Dinosaurio. Restar es retirar una cantidad para saber cuántos nos quedan. Cuenta cuántos elementos permanecen al final y marca tu respuesta. ¡Acompañame!',
+  multiplicacion: 'Hoy te voy a enseñar cómo Multiplicar Nidos. Multiplicar es sumar grupos que contienen la misma cantidad de elementos. Cuenta los grupos y multiplica. ¡Es fácil y divertido!',
+  division: 'Hoy te voy a explicar cómo Repartir Frutas. Dividir es distribuir todo en partes exactamente iguales entre los dinosaurios. Descubre cuántos le tocan a cada uno.',
+  completar: 'Hoy te enseñaré a descubrir los Huevos Escondidos. Tu misión es encontrar el número oculto que falta para completar la suma. ¡Cuenta con atención!',
+  comparar: 'Hoy vamos a comparar números. Mira los dos grupos en pantalla y elige la cifra de mayor valor. ¡Adelante con toda tu confianza!',
 };
 
 const GameScreen: React.FC<GameScreenProps> = ({ mode, difficulty, hero, onBackToMenu, onAddStars, activityEggs = {}, totalEggs = 0, onAddEgg, onOpenPuzzle, activeProfile }) => {
@@ -88,8 +88,8 @@ const GameScreen: React.FC<GameScreenProps> = ({ mode, difficulty, hero, onBackT
 
   useEffect(() => {
     if (showIntro) {
-      const greetingName = activeProfile ? `${activeProfile.firstName}` : 'amiguito';
-      const introText = `¡Hola ${greetingName}! Soy Daniela y ${hero.name} te acompaña. ${modeInstructions[mode] || ''}`;
+      const greetingName = activeProfile ? `${activeProfile.firstName}` : 'amigo';
+      const introText = `¡Hola, ${greetingName}! Te saluda Daniela. Junto a ${hero.name} te acompañaremos en esta misión. ${modeInstructions[mode] || ''}`;
       safeSpeak(introText);
     }
   }, [showIntro, hero.name, mode, safeSpeak, activeProfile]);

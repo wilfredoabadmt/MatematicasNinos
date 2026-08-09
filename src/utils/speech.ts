@@ -1,5 +1,10 @@
-// Sistema de voz alegre, jovial y motivadora — Mujer joven latinoamericana (25-30 años)
-// Usa ElevenLabs automáticamente para voz carismática real + Web Speech API como respaldo
+// ─── Sistema de Voz: Daniela ───
+// Locutora y anfitriona joven, profesional y cercana.
+// - Tono y Estilo: Cálido, entusiasta, empático y expresivo. Transmite energía positiva y confianza.
+// - Voz y Agudeza: Tono juvenil, claro y articulado, con una agudeza media-alta (fresca y brillante).
+// - Ritmo y Fluidez: Habla a un ritmo moderado-dinámico. Pausas naturales para mantener el interés del oyente.
+// - Acento: Español neutro latinoamericano (es-419).
+// - Actitud: Servicial, acogedora y con el dinamismo de una presentadora de podcast o anfitriona comercial.
 
 let currentResolve: (() => void) | null = null;
 let currentAudioElement: HTMLAudioElement | null = null;
@@ -48,12 +53,10 @@ export const cleanTextForSpeech = (text: string): string => {
     .trim();
 };
 
-// ─── ElevenLabs: voz real carismática y expresiva ───
-// Daniela: mujer joven latinoamericana, energética, alegre y motivadora
+// ─── ElevenLabs: Voz de Daniela (Anfitriona Joven y Profesional) ───
 const VOICE_ID = 'ajOR9IDAaubDK5qtLUqQ';
 const DEFAULT_API_KEY = (import.meta.env.VITE_ELEVENLABS_API_KEY as string | undefined) || 'sk_7459c04760770cce19a02a605edbd60102ac07908f85fa08';
 
-// Prioridad: clave pegada por el jugador > variable de entorno > clave por defecto
 const getApiKey = (): string => {
   try {
     const userKey = localStorage.getItem('dino_elevenlabs_api_key')?.trim();
@@ -81,9 +84,9 @@ const speakElevenLabs = async (text: string): Promise<boolean> => {
           text,
           model_id: 'eleven_multilingual_v2',
           voice_settings: {
-            stability: 0.12,         // Baja: máxima expresividad, entusiasmo y carisma
-            similarity_boost: 0.88,
-            style: 0.95,             // Casi máxima: alegría desbordante, motivación y energía
+            stability: 0.38,         // Estabilidad equilibrada: articulación clara y pausas naturales
+            similarity_boost: 0.85,  // Nitidez y agudeza fresca-brillante
+            style: 0.68,             // Estilo cálido, expresivo y con dinamismo de podcast/anfitriona
             use_speaker_boost: true,
           },
         }),
@@ -99,7 +102,7 @@ const speakElevenLabs = async (text: string): Promise<boolean> => {
 
   try {
     const audio = new Audio(audioUrl);
-    audio.playbackRate = 1.18;
+    audio.playbackRate = 1.06; // Ritmo moderado-dinámico con fluidez y claridad
     audio.volume = 1;
     currentAudioElement = audio;
     return new Promise((resolve) => {
@@ -112,7 +115,7 @@ const speakElevenLabs = async (text: string): Promise<boolean> => {
   }
 };
 
-// ─── Selección de voz femenina latinoamericana (fallback) ───
+// ─── Selección de voz femenina latinoamericana (Web Speech API Fallback) ───
 const getBestVoice = (): SpeechSynthesisVoice | null => {
   const voices = window.speechSynthesis.getVoices();
   if (!voices || voices.length === 0) return null;
@@ -137,14 +140,14 @@ const getBestVoice = (): SpeechSynthesisVoice | null => {
   return voices.find(v => v.lang.startsWith('es')) || null;
 };
 
-// Voz de respaldo con máxima expresividad posible en Web Speech API
+// Voz de respaldo en Web Speech API configurada según las pautas vocales
 const speakFallbackTTS = (text: string) => {
   if (!('speechSynthesis' in window)) return;
   try {
     const u = new SpeechSynthesisUtterance(text);
     u.lang = 'es-419';
-    u.rate = 1.18;
-    u.pitch = 1.65;
+    u.rate = 1.06;   // Ritmo moderado-dinámico
+    u.pitch = 1.25;  // Tono juvenil con agudeza media-alta (fresca y brillante)
     u.volume = 1;
     const voice = getBestVoice();
     if (voice) u.voice = voice;
@@ -212,8 +215,8 @@ export const speakAndWait = (text: string): Promise<void> => {
       try {
         const u = new SpeechSynthesisUtterance(clean);
         u.lang = 'es-419';
-        u.rate = 1.18;
-        u.pitch = 1.65;
+        u.rate = 1.06;
+        u.pitch = 1.25;
         u.volume = 1;
         const voice = getBestVoice();
         if (voice) u.voice = voice;
