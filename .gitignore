@@ -1,3 +1,8 @@
+# Local database data
+data/
+*.db
+*.sqlite
+
 # Dependencies
 node_modules/
 
