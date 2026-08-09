@@ -81,9 +81,9 @@ const speakElevenLabs = async (text: string): Promise<boolean> => {
           text,
           model_id: 'eleven_multilingual_v2',
           voice_settings: {
-            stability: 0.15,         // Baja: máxima expresividad, entusiasmo y carisma
-            similarity_boost: 0.86,
-            style: 0.88,             // Muy alta: alegría desbordante, motivación y energía
+            stability: 0.12,         // Baja: máxima expresividad, entusiasmo y carisma
+            similarity_boost: 0.88,
+            style: 0.95,             // Casi máxima: alegría desbordante, motivación y energía
             use_speaker_boost: true,
           },
         }),
@@ -99,7 +99,7 @@ const speakElevenLabs = async (text: string): Promise<boolean> => {
 
   try {
     const audio = new Audio(audioUrl);
-    audio.playbackRate = 1.12;
+    audio.playbackRate = 1.18;
     audio.volume = 1;
     currentAudioElement = audio;
     return new Promise((resolve) => {
