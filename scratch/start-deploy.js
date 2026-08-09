@@ -5,19 +5,20 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
-async function setNixpacksAndDeploy() {
+async function forceDeployDockerfile() {
   const appUuid = 'ybs1mpaeauw4dopgbvgbvr2a';
-  console.log(`1. Actualizando build_pack a Nixpacks en Coolify para ${appUuid}...`);
+  console.log(`1. Asegurando build_pack = dockerfile para ${appUuid}...`);
   await fetch(`${BASE_URL}/applications/${appUuid}`, {
     method: 'PATCH',
     headers,
     body: JSON.stringify({
-      build_pack: 'nixpacks',
+      build_pack: 'dockerfile',
+      dockerfile_location: '/Dockerfile',
       ports_exposes: '80',
     }),
   });
 
-  console.log('2. Disparando despliegue con Nixpacks...');
+  console.log('2. Disparando despliegue de Dockerfile (node:20-slim)...');
   const res = await fetch(`${BASE_URL}/deploy?uuid=${appUuid}&force=true`, {
     method: 'POST',
     headers,
@@ -26,4 +27,4 @@ async function setNixpacksAndDeploy() {
   console.log('Respuesta de Despliegue:', JSON.stringify(data, null, 2));
 }
 
-setNixpacksAndDeploy().catch(console.error);
+forceDeployDockerfile().catch(console.error);
