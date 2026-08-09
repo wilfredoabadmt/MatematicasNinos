@@ -7,9 +7,9 @@ services:
       dockerfile: Dockerfile
     restart: always
     ports:
-      - "3000:3000"
+      - "80:80"
     environment:
-      - PORT=3000
+      - PORT=80
       - NODE_ENV=production
       - DATABASE_DIR=/app/data
       - VITE_ELEVENLABS_API_KEY=sk_7459c04760770cce19a02a605edbd60102ac07908f85fa08

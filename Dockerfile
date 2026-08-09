@@ -8,12 +8,12 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-# Producción: Servidor Express con persistencia SQLite
+# Producción: Servidor Express en Puerto 80 para Coolify / Traefik
 FROM node:20-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
-ENV PORT=3000
+ENV PORT=80
 ENV DATABASE_DIR=/app/data
 
 # Instalar dependencias necesarias para better-sqlite3 y compilación nativa en Alpine
@@ -27,6 +27,6 @@ COPY server.js ./
 
 RUN mkdir -p /app/data
 
-EXPOSE 3000
+EXPOSE 80
 
 CMD ["node", "server.js"]
