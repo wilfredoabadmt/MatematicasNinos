@@ -12,13 +12,22 @@ interface EggHatchModalProps {
   onAction?: () => void;
 }
 
-const EggHatchModal: React.FC<EggHatchModalProps> = ({ hero, milestone, playerName, surpriseReward, onClose, onAction }) => {
+const EggHatchModal: React.FC<EggHatchModalProps> = ({
+  hero,
+  milestone,
+  playerName,
+  surpriseReward,
+  onClose,
+  onAction,
+}) => {
   const [cracks, setCracks] = useState(0);
   const [hatched, setHatched] = useState(false);
 
   React.useEffect(() => {
     const greetingName = playerName ? `${playerName}` : 'campeón';
-    speakAndWait(`¡Toca el huevo tres veces con entusiasmo para descubrir tu regalo sorpresa, ${greetingName}!`);
+    speakAndWait(
+      `¡Toca el huevo tres veces para descubrir tu recompensa de KidGenius Club, ${greetingName}!`
+    );
   }, [playerName]);
 
   const getRewardInfo = () => {
@@ -34,26 +43,26 @@ const EggHatchModal: React.FC<EggHatchModalProps> = ({ hero, milestone, playerNa
       case 5:
         return {
           title: '🎨 ¡Lámina PDF para Colorear!',
-          desc: `¡Has ganado la Lámina de Regalo en PDF de ${hero.name} lista para pintar por números!`,
+          desc: `¡Has desbloqueado la Lámina de KidGenius Club de ${hero.name} lista para pintar!`,
           icon: '🎨📄',
         };
       case 12:
         return {
-          title: '🧩 ¡Juego de Rompecabezas Jurásico!',
-          desc: `¡Has liberado el Juego de Rompecabezas de 3x3 de ${hero.name}!`,
-          icon: '🧩🦖',
+          title: '🧩 ¡Rompecabezas Interactivo!',
+          desc: `¡Has liberado el Juego de Rompecabezas de 3x3 con ${hero.name}!`,
+          icon: '🧩🌟',
         };
       case 15:
         return {
-          title: '📜 ¡Diploma Oficial de Campeón Jurásico!',
-          desc: `¡Felicidades! Has ganado el Certificado Oficial de Maestro con ${hero.name}.`,
+          title: '📜 ¡Diploma Oficial KidGenius Club!',
+          desc: `¡Felicidades! Has ganado el Certificado Oficial de Maestro Matemático con ${hero.name}.`,
           icon: '📜🏆',
         };
       case 20:
         return {
-          title: '👑 ¡Corona Dorada de Rey Rex!',
-          desc: `¡${hero.name} ahora viste la Corona Dorada de Rey Jurásico!`,
-          icon: '👑🦕',
+          title: '👑 ¡Corona Dorada de Genio!',
+          desc: `¡${hero.name} ahora viste la Corona Dorada de Campeón de KidGenius Club!`,
+          icon: '👑✨',
         };
     }
   };
@@ -71,28 +80,41 @@ const EggHatchModal: React.FC<EggHatchModalProps> = ({ hero, milestone, playerNa
       setHatched(true);
       playSound('victory');
       const greetingName = playerName ? `${playerName}` : 'campeón';
-      speakAndWait(`¡Muchas felicidades, ${greetingName}! El huevo ha eclosionado y acabas de ganar tu ${reward.title}. ¡Excelente logro!`);
+      speakAndWait(
+        `¡Muchas felicidades, ${greetingName}! Acabas de ganar tu ${reward.title}. ¡Excelente logro en KidGenius Club!`
+      );
     }
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-[fadeIn_0.4s_ease-out]">
-      <div className="bg-gradient-to-b from-amber-50 to-yellow-100 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border-4 border-amber-300 text-center relative overflow-hidden">
-        {/* Rayos de luz mágicos */}
-        <div className="absolute inset-0 bg-gradient-radial from-amber-300/30 via-transparent to-transparent animate-pulse pointer-events-none" />
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-[fadeIn_0.3s_ease-out]">
+      <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border-4 border-[#FFC928] text-center relative overflow-hidden">
+        <div className="inline-flex items-center gap-1.5 bg-[#35206F] text-white px-3 py-0.5 rounded-full text-xs font-bold font-fredoka mb-2">
+          <span>✨</span>
+          <span>RECOMPENSA KIDGENIUS</span>
+          <span>✨</span>
+        </div>
 
-        <h2 className="text-xl sm:text-2xl font-black text-amber-950 mb-1" style={{ fontFamily: "'Fredoka One', cursive" }}>
-          🐣 ¡HUEVO DE RECOMPENSA! 🐣
+        <h2 className="text-xl sm:text-2xl font-bold text-[#35206F] mb-1 font-fredoka">
+          🐣 ¡Huevo Sorpresa Desbloqueado! 🐣
         </h2>
-        <p className="text-xs sm:text-sm font-bold text-amber-800 mb-4" style={{ fontFamily: "'Nunito', sans-serif" }}>
-          {hatched ? '¡Premio Revelado!' : '¡Toca el Huevo 3 veces para hacerlo eclosionar!'}
+        <p className="text-xs sm:text-sm font-semibold text-[#6B6280] mb-3 font-nunito">
+          {hatched ? '¡Premio Revelado con Éxito!' : '¡Toca el Huevo 3 veces para abrirlo!'}
         </p>
 
         {/* Huevo Mágico Interactivo */}
-        <div className="my-6 flex justify-center items-center cursor-pointer" onClick={handleEggTap}>
+        <div className="my-5 flex justify-center items-center cursor-pointer" onClick={handleEggTap}>
           {!hatched ? (
-            <div className={`relative transition-transform duration-200 ${cracks === 1 ? 'animate-[bounce_0.3s_ease-in-out]' : cracks === 2 ? 'scale-110 rotate-6' : 'hover:scale-105'}`}>
-              <div className="text-8xl sm:text-9xl filter drop-shadow-2xl select-none">
+            <div
+              className={`relative transition-transform duration-200 ${
+                cracks === 1
+                  ? 'animate-[bounce_0.3s_ease-in-out]'
+                  : cracks === 2
+                  ? 'scale-110 rotate-6'
+                  : 'hover:scale-105'
+              }`}
+            >
+              <div className="text-8xl sm:text-9xl filter drop-shadow-lg select-none">
                 {cracks === 0 ? '🥚' : cracks === 1 ? '🥚' : '🐣'}
               </div>
               {cracks > 0 && (
@@ -102,12 +124,12 @@ const EggHatchModal: React.FC<EggHatchModalProps> = ({ hero, milestone, playerNa
               )}
             </div>
           ) : (
-            <div className="animate-[bounceIn_0.6s_ease-out] flex flex-col items-center">
+            <div className="animate-[bounceIn_0.5s_ease-out] flex flex-col items-center">
               <div className="text-7xl sm:text-8xl mb-2 animate-bounce">{reward.icon}</div>
-              <h3 className="text-lg sm:text-xl font-black text-emerald-950 mb-1" style={{ fontFamily: "'Fredoka One', cursive" }}>
+              <h3 className="text-lg sm:text-xl font-bold text-[#35206F] mb-1 font-fredoka">
                 {reward.title}
               </h3>
-              <p className="text-xs sm:text-sm text-emerald-800 font-bold max-w-xs" style={{ fontFamily: "'Nunito', sans-serif" }}>
+              <p className="text-xs sm:text-sm text-[#6B6280] font-bold max-w-xs font-nunito">
                 {reward.desc}
               </p>
             </div>
@@ -122,18 +144,16 @@ const EggHatchModal: React.FC<EggHatchModalProps> = ({ hero, milestone, playerNa
                   onClose();
                   onAction();
                 }}
-                className="w-full bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-amber-950 font-black py-3 px-4 rounded-2xl text-sm sm:text-base shadow-xl hover:scale-105 active:scale-95 transition-all border border-white/40"
-                style={{ fontFamily: "'Fredoka One', cursive" }}
+                className="w-full bg-[#7AC943] hover:bg-[#4F9A25] text-white font-bold py-3 px-4 rounded-2xl text-sm sm:text-base shadow-md hover:scale-102 active:scale-98 transition-all font-fredoka"
               >
-                🎉 ¡Usar Mi Recompensa Ahora!
+                🎉 ¡Ver Mi Recompensa Ahora!
               </button>
             )}
             <button
               onClick={onClose}
-              className="w-full bg-emerald-800 hover:bg-emerald-700 text-amber-100 font-bold py-2.5 px-4 rounded-2xl text-xs sm:text-sm shadow-md"
-              style={{ fontFamily: "'Nunito', sans-serif" }}
+              className="w-full bg-white hover:bg-[#FFF3D9] text-[#35206F] font-bold py-2.5 px-4 rounded-2xl text-xs sm:text-sm border border-[#FFC928]/40 transition-all font-fredoka"
             >
-              🏠 Continuar Jugando
+              🏠 Continuar Practicando
             </button>
           </div>
         )}

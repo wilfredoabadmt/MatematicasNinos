@@ -19,42 +19,44 @@ const App: React.FC = () => {
   const [showRegModal, setShowRegModal] = useState<boolean>(false);
 
   const [parentEmail, setParentEmail] = useState<string>(() => {
-    return localStorage.getItem('dino_math_parent_email') || '';
+    return localStorage.getItem('kg_parent_email') || localStorage.getItem('dino_math_parent_email') || '';
   });
   const [isPaidParent, setIsPaidParent] = useState<boolean>(() => {
-    return localStorage.getItem('dino_math_is_paid') === 'true';
+    return localStorage.getItem('kg_is_paid') === 'true' || localStorage.getItem('dino_math_is_paid') === 'true';
   });
 
   // Perfiles de Jugador (Nombre y Apellido)
   const [profiles, setProfiles] = useState<PlayerProfile[]>(() => {
-    const saved = localStorage.getItem('dino_math_profiles');
+    const saved = localStorage.getItem('kg_profiles') || localStorage.getItem('dino_math_profiles');
     if (saved) {
-      try { return JSON.parse(saved); } catch (_e) {}
+      try {
+        return JSON.parse(saved);
+      } catch (_e) {}
     }
     return [];
   });
 
   const [activeProfileId, setActiveProfileId] = useState<string | null>(() => {
-    return localStorage.getItem('dino_math_active_profile_id') || null;
+    return localStorage.getItem('kg_active_profile_id') || localStorage.getItem('dino_math_active_profile_id') || null;
   });
 
   const activeProfile = profiles.find(p => p.id === activeProfileId) || profiles[0] || null;
 
   useEffect(() => {
-    localStorage.setItem('dino_math_profiles', JSON.stringify(profiles));
+    localStorage.setItem('kg_profiles', JSON.stringify(profiles));
   }, [profiles]);
 
   useEffect(() => {
     if (activeProfileId) {
-      localStorage.setItem('dino_math_active_profile_id', activeProfileId);
+      localStorage.setItem('kg_active_profile_id', activeProfileId);
     }
   }, [activeProfileId]);
 
   useEffect(() => {
     if (parentEmail) {
-      localStorage.setItem('dino_math_parent_email', parentEmail);
+      localStorage.setItem('kg_parent_email', parentEmail);
     }
-    localStorage.setItem('dino_math_is_paid', isPaidParent ? 'true' : 'false');
+    localStorage.setItem('kg_is_paid', isPaidParent ? 'true' : 'false');
   }, [parentEmail, isPaidParent]);
 
   // Verificar correo del padre en la API del servidor
@@ -126,14 +128,23 @@ const App: React.FC = () => {
     } catch (_e) {}
   };
 
-  const activityEggs = activeProfile?.activityEggs || { suma: 0, resta: 0, multiplicacion: 0, division: 0, completar: 0, comparar: 0 };
+  const activityEggs = activeProfile?.activityEggs || {
+    suma: 0,
+    resta: 0,
+    multiplicacion: 0,
+    division: 0,
+    completar: 0,
+    comparar: 0,
+  };
   const totalStars = activeProfile?.totalStars || 0;
   const totalEggs = Object.values(activityEggs).reduce((a, b) => a + b, 0);
 
   const handleSaveProfile = (firstName: string, lastName: string, emailFromSplash?: string) => {
     const effectiveEmail = emailFromSplash || parentEmail;
-    const existing = profiles.find(p => p.firstName.toLowerCase() === firstName.toLowerCase() && p.lastName.toLowerCase() === lastName.toLowerCase());
-    
+    const existing = profiles.find(
+      p => p.firstName.toLowerCase() === firstName.toLowerCase() && p.lastName.toLowerCase() === lastName.toLowerCase()
+    );
+
     let targetProfile: PlayerProfile;
     if (existing) {
       targetProfile = existing;
@@ -168,23 +179,27 @@ const App: React.FC = () => {
 
   const handleAddEgg = (mode: GameMode) => {
     if (!activeProfile) return;
-    setProfiles(prev => prev.map(p => {
-      if (p.id !== activeProfile.id) return p;
-      const current = p.activityEggs[mode] || 0;
-      if (current >= 5) return p;
-      return {
-        ...p,
-        activityEggs: { ...p.activityEggs, [mode]: current + 1 },
-      };
-    }));
+    setProfiles(prev =>
+      prev.map(p => {
+        if (p.id !== activeProfile.id) return p;
+        const current = p.activityEggs[mode] || 0;
+        if (current >= 5) return p;
+        return {
+          ...p,
+          activityEggs: { ...p.activityEggs, [mode]: current + 1 },
+        };
+      })
+    );
   };
 
   const handleAddStars = (stars: number) => {
     if (!activeProfile) return;
-    setProfiles(prev => prev.map(p => {
-      if (p.id !== activeProfile.id) return p;
-      return { ...p, totalStars: p.totalStars + stars };
-    }));
+    setProfiles(prev =>
+      prev.map(p => {
+        if (p.id !== activeProfile.id) return p;
+        return { ...p, totalStars: p.totalStars + stars };
+      })
+    );
   };
 
   useEffect(() => {
@@ -222,23 +237,21 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="relative" onClick={handleUserInteraction}>
+    <div className="relative min-h-screen bg-[#FFF9EC]" onClick={handleUserInteraction}>
       {/* Floating Music Control Button */}
       <button
-        onClick={(e) => {
+        onClick={e => {
           e.stopPropagation();
           toggleMusic();
         }}
-        className="fixed top-3 right-3 z-50 bg-amber-400/90 hover:bg-amber-300 text-amber-950 rounded-full p-2.5 shadow-xl border-2 border-amber-200 transition-transform hover:scale-110 active:scale-95 flex items-center justify-center text-lg"
-        title={musicOn ? "Desactivar música jurásica" : "Activar música jurásica"}
+        className="fixed top-3 right-3 z-50 bg-[#FFC928] hover:bg-[#E0A800] text-[#35206F] rounded-full p-2.5 shadow-md border-2 border-white transition-transform hover:scale-110 active:scale-95 flex items-center justify-center text-base"
+        title={musicOn ? 'Desactivar música de KidGenius' : 'Activar música de KidGenius'}
       >
         {musicOn ? '🎵' : '🔇'}
       </button>
 
       {/* Modal de Rompecabezas */}
-      {showPuzzle && (
-        <DinoPuzzleModal hero={selectedHero} onClose={() => setShowPuzzle(false)} />
-      )}
+      {showPuzzle && <DinoPuzzleModal hero={selectedHero} onClose={() => setShowPuzzle(false)} />}
 
       {/* Modal de Registro/Cambio de Jugador */}
       {showRegModal && (
@@ -262,15 +275,16 @@ const App: React.FC = () => {
           onTogglePaidStatus={handleTogglePaidStatus}
         />
       )}
-      {screen === 'heroSelect' && (
-        <HeroSelect onSelectHero={handleSelectHero} activeProfile={activeProfile} />
-      )}
+      {screen === 'heroSelect' && <HeroSelect onSelectHero={handleSelectHero} activeProfile={activeProfile} />}
 
       {screen === 'menu' && (
         <MainMenu
           hero={selectedHero}
           onStartGame={handleStartGame}
-          onChangeHero={() => { handleUserInteraction(); setScreen('heroSelect'); }}
+          onChangeHero={() => {
+            handleUserInteraction();
+            setScreen('heroSelect');
+          }}
           totalStars={totalStars}
           activityEggs={activityEggs}
           totalEggs={totalEggs}
@@ -290,6 +304,7 @@ const App: React.FC = () => {
           totalEggs={totalEggs}
           onAddEgg={handleAddEgg}
           onOpenPuzzle={() => setShowPuzzle(true)}
+          activeProfile={activeProfile}
         />
       )}
     </div>

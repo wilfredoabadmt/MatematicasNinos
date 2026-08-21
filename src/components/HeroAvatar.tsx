@@ -11,6 +11,9 @@ interface HeroAvatarProps {
 }
 
 const dinoImages: Record<string, string> = {
+  geni: '/geni-mascot.png',
+  dinosaurio: '/images/dinosaurio-frente.png',
+  dinosauria: '/images/dinosauria.png',
   rexy: '/images/dino-rexy.png',
   tricy: '/images/dino-tricy.png',
   stego: '/images/dino-stego.png',
@@ -20,12 +23,15 @@ const dinoImages: Record<string, string> = {
 };
 
 const dinoNames: Record<string, string> = {
-  rexy: 'Rexy el T-Rex Pixar 3D',
-  tricy: 'Tricy Triceratops Pixar 3D',
-  stego: 'Stego Estegosaurio Pixar 3D',
-  bronto: 'Bronto Brontosaurio Pixar 3D',
-  ptero: 'Ptero Pterodáctilo Pixar 3D',
-  rapto: 'Rapto Velociraptor Pixar 3D',
+  geni: 'Geni Mascota KidGenius Club',
+  dinosaurio: 'Dinosaurio Aventurero',
+  dinosauria: 'Dinosauria Aventurera',
+  rexy: 'Rexy el T-Rex',
+  tricy: 'Tricy Triceratops',
+  stego: 'Stego Estegosaurio',
+  bronto: 'Bronto Brontosaurio',
+  ptero: 'Ptero Pterodáctilo',
+  rapto: 'Rapto Velociraptor',
 };
 
 const HeroAvatar: React.FC<HeroAvatarProps> = ({
@@ -37,7 +43,7 @@ const HeroAvatar: React.FC<HeroAvatarProps> = ({
   sad = false,
   hasCrown = false,
 }) => {
-  const imgSrc = dinoImages[heroId] || dinoImages.rexy;
+  const imgSrc = dinoImages[heroId] || dinoImages.geni || dinoImages.dinosaurio;
 
   const animClass = celebrating
     ? 'animate-bounce'
@@ -53,35 +59,35 @@ const HeroAvatar: React.FC<HeroAvatarProps> = ({
       style={{
         width: size,
         height: size,
-        filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.4))',
+        filter: 'drop-shadow(0 8px 20px rgba(53, 32, 111, 0.25))',
       }}
     >
-      {/* Corona Dorada de Rey Rex para 20 Huevos */}
+      {/* Corona Dorada de Campeón KidGenius para 20 Logros */}
       {hasCrown && (
         <div className="absolute -top-5 left-1/2 -translate-x-1/2 text-2xl sm:text-3xl z-20 animate-bounce filter drop-shadow-md">
           👑
         </div>
       )}
 
-      {/* Pixar 3D Rendered Dinosaur Image - Clean display */}
+      {/* Imagen del Personaje / Mascota */}
       <img
         src={imgSrc}
-        alt={dinoNames[heroId] || 'Dinosaurio Pixar'}
+        alt={dinoNames[heroId] || 'Compañero KidGenius'}
         className="w-full h-full object-contain transform transition-transform duration-300 hover:scale-105"
-        style={{ borderRadius: '24px' }}
+        style={{ borderRadius: '20px' }}
       />
 
       {/* Speech effect indicator */}
       {talking && (
-        <div className="absolute -top-1 -right-1 bg-emerald-400 text-emerald-950 rounded-full p-1.5 shadow-lg animate-bounce text-xs font-bold border border-white/50 z-10">
+        <div className="absolute -top-1 -right-1 bg-[#FFC928] text-[#35206F] rounded-full p-1.5 shadow-lg animate-bounce text-xs font-bold border-2 border-white z-10">
           🔊
         </div>
       )}
 
       {/* Celebration sparkles */}
       {celebrating && (
-        <div className="absolute -top-4 left-1/2 -translate-x-1/2 text-xl animate-pulse z-10">
-          ✨ ⭐ ✨
+        <div className="absolute -top-4 left-1/2 -translate-x-1/2 text-xl animate-pulse z-10 whitespace-nowrap">
+          ✨ 🌟 ✨
         </div>
       )}
     </div>

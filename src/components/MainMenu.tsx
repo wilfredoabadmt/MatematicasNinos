@@ -18,30 +18,102 @@ interface MainMenuProps {
 }
 
 const gameCategories = [
-  { mode: 'suma' as GameMode, title: 'Sumas Jurásicas', emoji: '➕', color: 'from-emerald-500 to-green-700', description: '¡Sumemos juntos!', speech: '¡Excelente elección! Vamos a practicar Sumas Jurásicas.' },
-  { mode: 'resta' as GameMode, title: 'Restas de Dinosaurio', emoji: '➖', color: 'from-amber-500 to-orange-700', description: '¡Resta y aprende!', speech: '¡Genial! Es momento de resolver Restas de Dinosaurio.' },
-  { mode: 'multiplicacion' as GameMode, title: 'Multiplicar Nidos', emoji: '✖️', color: 'from-purple-500 to-indigo-700', description: '¡Suma grupos iguales!', speech: '¡Fantástico! Vamos a Multiplicar Nidos.' },
-  { mode: 'division' as GameMode, title: 'Repartir Frutas', emoji: '➗', color: 'from-teal-500 to-cyan-700', description: '¡Reparte en partes iguales!', speech: '¡Estupendo! Vamos a Repartir Frutas con mucha diversión.' },
-  { mode: 'completar' as GameMode, title: 'Huevos Escondidos', emoji: '🧩', color: 'from-rose-500 to-pink-700', description: '¡Descubre lo que falta!', speech: '¡Un gran desafío! Vamos a encontrar los Huevos Escondidos.' },
-  { mode: 'comparar' as GameMode, title: '¿Quién es Mayor?', emoji: '⚖️', color: 'from-amber-600 to-yellow-700', description: '¡Encuentra el más grande!', speech: '¡Me encanta! Vamos a comparar números y encontrar la cifra mayor.' },
+  {
+    mode: 'suma' as GameMode,
+    title: 'Sumas Divertidas',
+    emoji: '➕',
+    color: 'from-[#7AC943] to-[#4F9A25]',
+    bgLight: 'bg-[#7AC943]/10',
+    border: 'border-[#7AC943]/30',
+    description: '¡Juntemos cantidades y contemos el total!',
+    speech: '¡Excelente elección! Vamos a practicar Sumas Divertidas.',
+  },
+  {
+    mode: 'resta' as GameMode,
+    title: 'Restas Ágiles',
+    emoji: '➖',
+    color: 'from-[#FF8A25] to-[#E05315]',
+    bgLight: 'bg-[#FF8A25]/10',
+    border: 'border-[#FF8A25]/30',
+    description: '¡Quita una parte y descubre cuánto queda!',
+    speech: '¡Genial! Es momento de resolver Restas Ágiles.',
+  },
+  {
+    mode: 'multiplicacion' as GameMode,
+    title: 'Multiplicar en Grupos',
+    emoji: '✖️',
+    color: 'from-[#35206F] to-[#4B2C99]',
+    bgLight: 'bg-[#35206F]/10',
+    border: 'border-[#35206F]/30',
+    description: '¡Suma conjuntos iguales a toda velocidad!',
+    speech: '¡Fantástico! Vamos a Multiplicar en Grupos.',
+  },
+  {
+    mode: 'division' as GameMode,
+    title: 'Repartir en Partes Iguales',
+    emoji: '➗',
+    color: 'from-[#38A9E8] to-[#1E6FA8]',
+    bgLight: 'bg-[#38A9E8]/10',
+    border: 'border-[#38A9E8]/30',
+    description: '¡Comparte equitativamente con tus amigos!',
+    speech: '¡Estupendo! Vamos a Repartir en Partes Iguales.',
+  },
+  {
+    mode: 'completar' as GameMode,
+    title: 'Número Escondido',
+    emoji: '🧩',
+    color: 'from-[#FFC928] to-[#E0A800]',
+    bgLight: 'bg-[#FFC928]/10',
+    border: 'border-[#FFC928]/30',
+    description: '¡Descubre la cifra oculta en la ecuación!',
+    speech: '¡Un gran desafío! Vamos a encontrar el Número Escondido.',
+  },
+  {
+    mode: 'comparar' as GameMode,
+    title: '¿Quién es Mayor?',
+    emoji: '⚖️',
+    color: 'from-[#6B6280] to-[#35206F]',
+    bgLight: 'bg-[#6B6280]/10',
+    border: 'border-[#6B6280]/30',
+    description: '¡Compara cantidades y elige la más grande!',
+    speech: '¡Me encanta! Vamos a comparar números y encontrar la cifra mayor.',
+  },
 ];
 
 const difficulties = [
-  { value: 'facil' as Difficulty, label: '🥚 Bebé Dino (Fácil)', sub: 'Números chiquitos (1° y 2°)', color: 'from-emerald-500 to-green-600', speech: 'Seleccionaste el nivel Bebé Dino.' },
-  { value: 'medio' as Difficulty, label: '🦕 Dino Joven (Medio)', sub: 'Desafío medio (3° y 4°)', color: 'from-amber-500 to-orange-600', speech: 'Seleccionaste el nivel Dino Joven.' },
-  { value: 'dificil' as Difficulty, label: 'REX T-Rex Máster (Difícil)', sub: 'Para campeones (5° y 6°)', color: 'from-red-500 to-rose-700', speech: 'Seleccionaste el nivel T-Rex Máster. ¡A demostrar todo tu talento!' },
+  {
+    value: 'facil' as Difficulty,
+    label: '🥚 Bebé Explorador (Fácil)',
+    sub: '1° y 2° de Primaria · Números básicos',
+    color: 'from-[#7AC943] to-[#4F9A25]',
+    speech: 'Seleccionaste el nivel Bebé Explorador.',
+  },
+  {
+    value: 'medio' as Difficulty,
+    label: '🦕 Aventurero Pro (Medio)',
+    sub: '3° y 4° de Primaria · Desafío intermedio',
+    color: 'from-[#38A9E8] to-[#2B78C5]',
+    speech: 'Seleccionaste el nivel Aventurero Pro.',
+  },
+  {
+    value: 'dificil' as Difficulty,
+    label: '👑 Genio Máster (Difícil)',
+    sub: '5° y 6° de Primaria · Para súper campeones',
+    color: 'from-[#FF8A25] to-[#E05315]',
+    speech: 'Seleccionaste el nivel Genio Máster. ¡A demostrar todo tu talento!',
+  },
 ];
 
-const MainMenu: React.FC<MainMenuProps> = ({ 
-  hero, 
-  onStartGame, 
-  onChangeHero, 
-  totalStars, 
-  activityEggs = {}, 
-  totalEggs = 0, 
+const MainMenu: React.FC<MainMenuProps> = ({
+  hero,
+  onStartGame,
+  onChangeHero,
+  totalStars,
+  activityEggs = {},
+  totalEggs = 0,
   onOpenPuzzle,
   activeProfile,
-  onOpenRegistration 
+  onOpenRegistration,
 }) => {
   const [selectedMode, setSelectedMode] = useState<GameMode | null>(null);
   const [showDifficulty, setShowDifficulty] = useState(false);
@@ -49,15 +121,19 @@ const MainMenu: React.FC<MainMenuProps> = ({
   const [speechText, setSpeechText] = useState('');
   const [downloadingDiploma, setDownloadingDiploma] = useState(false);
 
-  const fullName = activeProfile ? `${activeProfile.firstName} ${activeProfile.lastName}`.trim() : 'Campeón Jurásico';
+  const fullName = activeProfile
+    ? `${activeProfile.firstName} ${activeProfile.lastName}`.trim()
+    : 'Campeón KidGenius';
 
   useEffect(() => {
-    const greeting = activeProfile ? `¡Hola ${activeProfile.firstName}! Qué gran alegría verte. Elige tu misión matemática favorita para comenzar.` : `¡Hola! Qué alegría saludarte. Elige tu misión matemática favorita para comenzar.`;
+    const greeting = activeProfile
+      ? `¡Hola ${activeProfile.firstName}! Qué gran alegría verte en KidGenius Club. Elige tu misión favorita para comenzar.`
+      : `¡Hola! Te damos la bienvenida a KidGenius Club. Elige tu misión favorita para comenzar.`;
     setSpeechText(greeting);
     return () => stopSpeaking();
   }, [hero, activeProfile]);
 
-  const handleCategoryClick = (cat: typeof gameCategories[0]) => {
+  const handleCategoryClick = (cat: (typeof gameCategories)[0]) => {
     playSound('click');
     setSelectedMode(cat.mode);
     setSpeechText(cat.speech);
@@ -67,7 +143,7 @@ const MainMenu: React.FC<MainMenuProps> = ({
     setTimeout(() => setHeroTalking(false), 1800);
   };
 
-  const handleDifficultySelect = (diff: typeof difficulties[0]) => {
+  const handleDifficultySelect = (diff: (typeof difficulties)[0]) => {
     if (selectedMode) {
       playSound('magic');
       stopSpeaking();
@@ -90,164 +166,208 @@ const MainMenu: React.FC<MainMenuProps> = ({
   const hasCrown = totalEggs >= 20;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-950 via-teal-950 to-amber-950 relative overflow-hidden flex flex-col items-center justify-between p-3 md:p-6 text-white">
-      <div className="absolute inset-0 bg-cover bg-center opacity-30" style={{ backgroundImage: 'url(/images/dino-bg.png)' }} />
-      <div className="absolute inset-0 bg-gradient-to-b from-emerald-950/80 via-teal-950/70 to-amber-950/90" />
+    <div className="min-h-screen bg-[#FFF9EC] relative overflow-hidden flex flex-col items-center justify-between p-3 md:p-6 text-[#241A3D]">
+      {/* Background Soft Gradients */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 left-10 w-96 h-96 bg-[#FFC928]/15 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-10 w-96 h-96 bg-[#7AC943]/15 rounded-full blur-3xl" />
+      </div>
 
       <div className="relative z-10 w-full max-w-4xl flex flex-col items-center my-auto">
-        <div className="w-full flex flex-wrap items-center justify-between gap-2 mb-2">
+        {/* Top Navbar */}
+        <div className="w-full flex flex-wrap items-center justify-between gap-2 mb-3">
           <div className="flex items-center gap-2">
-            <button onClick={onChangeHero}
-              className="flex items-center gap-1.5 bg-emerald-900/80 hover:bg-emerald-800 text-amber-200 rounded-full px-3 py-1.5 text-xs font-bold transition-all shadow-md border border-emerald-500/30"
-              style={{ fontFamily: "'Nunito', sans-serif" }}>
-              <span>🔄</span> Cambiar Dino
+            <button
+              onClick={onChangeHero}
+              className="flex items-center gap-1.5 bg-white hover:bg-[#FFF3D9] text-[#35206F] rounded-full px-3.5 py-1.5 text-xs font-bold transition-all shadow-xs border border-[#FFC928]/40 font-fredoka"
+            >
+              <span>🔄</span> Cambiar Compañero
             </button>
             {onOpenRegistration && (
-              <button onClick={onOpenRegistration}
-                className="flex items-center gap-1 bg-amber-900/80 hover:bg-amber-800 text-amber-100 rounded-full px-3 py-1.5 text-xs font-bold transition-all shadow-md border border-amber-500/30"
-                style={{ fontFamily: "'Nunito', sans-serif" }}>
+              <button
+                onClick={onOpenRegistration}
+                className="flex items-center gap-1.5 bg-white hover:bg-[#FFF3D9] text-[#35206F] rounded-full px-3.5 py-1.5 text-xs font-bold transition-all shadow-xs border border-[#7AC943]/40 font-fredoka"
+              >
                 <span>👤</span> <span>{fullName}</span> <span>✏️</span>
               </button>
             )}
           </div>
+
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1.5 bg-amber-500/90 rounded-full px-3 py-1 text-xs sm:text-sm font-bold text-amber-950 shadow-md border border-amber-300">
+            <div className="flex items-center gap-1.5 bg-[#FFC928] text-[#35206F] rounded-full px-3 py-1 text-xs sm:text-sm font-bold shadow-xs font-fredoka border border-white">
               <span>🥚</span>
-              <span style={{ fontFamily: "'Fredoka One', cursive" }}>{totalEggs} Huevos</span>
+              <span>{totalEggs} Misiones</span>
             </div>
-            <div className="flex items-center gap-1.5 bg-emerald-500/90 rounded-full px-3 py-1 text-xs sm:text-sm font-bold text-white shadow-md border border-emerald-300">
+            <div className="flex items-center gap-1.5 bg-[#7AC943] text-white rounded-full px-3 py-1 text-xs sm:text-sm font-bold shadow-xs font-fredoka border border-white">
               <span>⭐</span>
-              <span style={{ fontFamily: "'Fredoka One', cursive" }}>{totalStars}</span>
+              <span>{totalStars}</span>
             </div>
           </div>
         </div>
 
-        <div className="w-full bg-amber-50/95 backdrop-blur-md rounded-2xl p-3 sm:p-4 mb-3 sm:mb-4 shadow-xl border-2 sm:border-3 border-amber-300 flex items-center gap-3 animate-[fadeIn_0.5s_ease-out]">
-          <div className="flex-shrink-0 cursor-pointer" onClick={() => speakAndWait(hero.greeting)}>
+        {/* Mascot Speech Bubble Card */}
+        <div className="w-full bg-white rounded-3xl p-3.5 sm:p-4 mb-3 sm:mb-4 shadow-kg border-2 border-[#FFC928]/40 flex items-center gap-3.5 animate-[fadeIn_0.5s_ease-out]">
+          <div
+            className="flex-shrink-0 cursor-pointer"
+            onClick={() => speakAndWait(hero.greeting)}
+          >
             <HeroAvatar heroId={hero.id} size={70} talking={heroTalking} hasCrown={hasCrown} />
           </div>
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-0.5">
-              <span className="text-xs sm:text-sm font-bold text-emerald-800" style={{ fontFamily: "'Fredoka One', cursive" }}>
+              <span className="text-xs sm:text-sm font-bold text-[#35206F] font-fredoka">
                 {hero.emoji} {hero.name} {hasCrown && '👑'}
               </span>
+              <span className="text-[10px] bg-[#7AC943]/15 text-[#4F9A25] font-bold px-2 py-0.5 rounded-full font-fredoka">
+                Compañero Activo
+              </span>
             </div>
-            <p className="text-xs sm:text-base font-bold text-emerald-950 leading-tight" style={{ fontFamily: "'Nunito', sans-serif" }}>
+            <p className="text-xs sm:text-sm font-bold text-[#241A3D] leading-snug font-nunito">
               {speechText}
             </p>
           </div>
         </div>
 
-        <h1 className="text-2xl md:text-4xl font-bold text-center mb-1" style={{ fontFamily: "'Fredoka One', cursive" }}>
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-amber-300 to-emerald-300">Dino Math 🌋</span>
-        </h1>
-        <p className="text-amber-200/80 text-center mb-3 text-xs font-semibold" style={{ fontFamily: "'Nunito', sans-serif" }}>
-          🌴 ¡Misiones matemáticas en la Era Prehistórica! 🌴
-        </p>
+        {/* Branding & Subtitle */}
+        <div className="text-center mb-3">
+          <h1 className="text-2xl sm:text-4xl font-bold font-fredoka text-[#35206F] mb-0.5">
+            KidGenius <span className="text-[#7AC943]">Club</span> 🚀
+          </h1>
+          <p className="text-xs sm:text-sm text-[#6B6280] font-bold font-nunito">
+            Solo 15 minutos al día para convertir las matemáticas en tu aventura favorita
+          </p>
+        </div>
 
+        {/* Difficulty Selection Modal */}
         {showDifficulty && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4" onClick={() => setShowDifficulty(false)}>
-            <div className="bg-amber-50 rounded-3xl p-6 md:p-8 max-w-md w-full shadow-2xl animate-[bounceIn_0.5s_ease-out] border-4 border-amber-400" onClick={e => e.stopPropagation()}>
-              <div className="flex justify-center mb-3"><HeroAvatar heroId={hero.id} size={85} talking={heroTalking} hasCrown={hasCrown} /></div>
-              <h2 className="text-2xl font-bold text-center mb-1 text-emerald-900" style={{ fontFamily: "'Fredoka One', cursive" }}>¿Qué tan grande es el reto? 🤔</h2>
-              <p className="text-center text-emerald-700 mb-4 text-sm font-semibold" style={{ fontFamily: "'Nunito', sans-serif" }}>Elige tu nivel jurásico</p>
-              <div className="space-y-3">
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-[fadeIn_0.2s_ease-out]"
+            onClick={() => setShowDifficulty(false)}
+          >
+            <div
+              className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border-4 border-[#FFC928] animate-[bounceIn_0.4s_ease-out]"
+              onClick={e => e.stopPropagation()}
+            >
+              <div className="flex justify-center mb-2">
+                <HeroAvatar heroId={hero.id} size={85} talking={heroTalking} hasCrown={hasCrown} />
+              </div>
+              <h2 className="text-xl sm:text-2xl font-bold text-center mb-1 text-[#35206F] font-fredoka">
+                ¿Qué nivel quieres practicar hoy? 🤔
+              </h2>
+              <p className="text-center text-[#6B6280] mb-4 text-xs sm:text-sm font-semibold font-nunito">
+                Alineado de 1° a 6° de Primaria
+              </p>
+              <div className="space-y-2.5">
                 {difficulties.map(diff => (
-                  <button key={diff.value} onClick={() => handleDifficultySelect(diff)}
-                    className={`w-full bg-gradient-to-r ${diff.color} text-white rounded-2xl py-4 px-6 text-lg font-bold
-                      transform transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg border border-white/20`}
-                    style={{ fontFamily: "'Fredoka One', cursive" }}>
-                    {diff.label}
-                    <span className="block text-xs font-normal opacity-90" style={{ fontFamily: "'Nunito', sans-serif" }}>{diff.sub}</span>
+                  <button
+                    key={diff.value}
+                    onClick={() => handleDifficultySelect(diff)}
+                    className={`w-full bg-gradient-to-r ${diff.color} text-white rounded-2xl py-3 px-5 text-base sm:text-lg font-bold
+                      transform transition-all duration-200 hover:scale-103 active:scale-97 shadow-md font-fredoka text-left`}
+                  >
+                    <div>{diff.label}</div>
+                    <span className="block text-xs font-normal opacity-90 font-nunito">{diff.sub}</span>
                   </button>
                 ))}
               </div>
-              <button onClick={() => setShowDifficulty(false)} className="mt-4 w-full text-emerald-700 hover:text-emerald-900 py-2 text-sm font-bold" style={{ fontFamily: "'Nunito', sans-serif" }}>← Volver</button>
+              <button
+                onClick={() => setShowDifficulty(false)}
+                className="mt-3.5 w-full text-[#6B6280] hover:text-[#35206F] py-2 text-xs sm:text-sm font-bold font-fredoka text-center"
+              >
+                ← Volver a misiones
+              </button>
             </div>
           </div>
         )}
 
-        <div className="w-full max-w-4xl mb-3 sm:mb-4 bg-gradient-to-r from-amber-500/90 via-yellow-500/90 to-amber-600/90 backdrop-blur-md rounded-2xl md:rounded-3xl p-3 sm:p-4 border-2 sm:border-3 border-amber-300 shadow-xl animate-[fadeIn_0.5s_ease-out]">
-          <div className="flex items-center justify-between gap-2 mb-2">
+        {/* Ruta de Aprendizaje y Bonos Desbloqueables */}
+        <div className="w-full max-w-4xl mb-3 sm:mb-4 bg-white rounded-3xl p-3.5 sm:p-4 border-2 border-[#FFC928]/40 shadow-kg animate-[fadeIn_0.5s_ease-out]">
+          <div className="flex items-center justify-between gap-2 mb-2.5">
             <div className="flex items-center gap-2">
-              <span className="text-xl sm:text-2xl animate-bounce">🗺️</span>
-              <h2 className="text-sm sm:text-base font-bold text-amber-950" style={{ fontFamily: "'Fredoka One', cursive" }}>
-                Ruta del Valle Jurásico ({totalEggs} Huevos Recolectados)
+              <span className="text-xl sm:text-2xl">🗺️</span>
+              <h2 className="text-xs sm:text-sm font-bold text-[#35206F] font-fredoka">
+                Ruta de Recompensas y Bonos ({totalEggs} Misiones Superadas)
               </h2>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-2">
-            <div className="bg-amber-50/95 rounded-xl p-2 text-center border border-amber-300 shadow-md">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-2.5">
+            <div className="bg-[#FFF9EC] rounded-2xl p-2.5 text-center border border-[#FFC928]/40 shadow-2xs">
               <span className="text-base sm:text-lg block">🎨📄</span>
-              <span className="text-[10px] sm:text-xs font-bold text-emerald-950 block leading-tight" style={{ fontFamily: "'Fredoka One', cursive" }}>Lámina PDF</span>
-              <span className="text-[8px] text-amber-800 font-bold block" style={{ fontFamily: "'Nunito', sans-serif" }}>5 Huevos</span>
+              <span className="text-[10px] sm:text-xs font-bold text-[#35206F] block leading-tight font-fredoka">Lámina PDF</span>
+              <span className="text-[9px] text-[#6B6280] font-bold block font-nunito">5 Misiones</span>
             </div>
 
-            <div className="bg-amber-50/95 rounded-xl p-2 text-center border border-amber-300 shadow-md">
+            <div className="bg-[#FFF9EC] rounded-2xl p-2.5 text-center border border-[#FFC928]/40 shadow-2xs">
               <span className="text-base sm:text-lg block">{isPuzzleUnlocked ? '🔓🧩' : '🔒🧩'}</span>
-              <span className="text-[10px] sm:text-xs font-bold text-emerald-950 block leading-tight" style={{ fontFamily: "'Fredoka One', cursive" }}>Rompecabezas</span>
-              <span className="text-[8px] text-amber-800 font-bold block" style={{ fontFamily: "'Nunito', sans-serif" }}>{isPuzzleUnlocked ? '¡LIBERADO!' : `${totalEggs}/12 Huevos`}</span>
+              <span className="text-[10px] sm:text-xs font-bold text-[#35206F] block leading-tight font-fredoka">Rompecabezas</span>
+              <span className="text-[9px] text-[#6B6280] font-bold block font-nunito">{isPuzzleUnlocked ? '¡LIBERADO!' : `${totalEggs}/12 Misiones`}</span>
             </div>
 
-            <div className="bg-amber-50/95 rounded-xl p-2 text-center border border-amber-300 shadow-md">
+            <div className="bg-[#FFF9EC] rounded-2xl p-2.5 text-center border border-[#FFC928]/40 shadow-2xs">
               <span className="text-base sm:text-lg block">{isDiplomaUnlocked ? '📜🏆' : '🔒📜'}</span>
-              <span className="text-[10px] sm:text-xs font-bold text-emerald-950 block leading-tight" style={{ fontFamily: "'Fredoka One', cursive" }}>Diploma PDF</span>
-              <span className="text-[8px] text-amber-800 font-bold block" style={{ fontFamily: "'Nunito', sans-serif" }}>{isDiplomaUnlocked ? '¡LIBERADO!' : `${totalEggs}/15 Huevos`}</span>
+              <span className="text-[10px] sm:text-xs font-bold text-[#35206F] block leading-tight font-fredoka">Diploma Oficial</span>
+              <span className="text-[9px] text-[#6B6280] font-bold block font-nunito">{isDiplomaUnlocked ? '¡LIBERADO!' : `${totalEggs}/15 Misiones`}</span>
             </div>
 
-            <div className="bg-amber-50/95 rounded-xl p-2 text-center border border-amber-300 shadow-md">
-              <span className="text-base sm:text-lg block">{hasCrown ? '👑🦖' : '🔒👑'}</span>
-              <span className="text-[10px] sm:text-xs font-bold text-emerald-950 block leading-tight" style={{ fontFamily: "'Fredoka One', cursive" }}>Corona Rey Rex</span>
-              <span className="text-[8px] text-amber-800 font-bold block" style={{ fontFamily: "'Nunito', sans-serif" }}>{hasCrown ? '¡PUESTA!' : `${totalEggs}/20 Huevos`}</span>
+            <div className="bg-[#FFF9EC] rounded-2xl p-2.5 text-center border border-[#FFC928]/40 shadow-2xs">
+              <span className="text-base sm:text-lg block">{hasCrown ? '👑✨' : '🔒👑'}</span>
+              <span className="text-[10px] sm:text-xs font-bold text-[#35206F] block leading-tight font-fredoka">Corona de Genio</span>
+              <span className="text-[9px] text-[#6B6280] font-bold block font-nunito">{hasCrown ? '¡PUESTA!' : `${totalEggs}/20 Misiones`}</span>
             </div>
           </div>
 
-          <div className="space-y-1.5">
+          <div className="space-y-2">
             {isPuzzleUnlocked && (
-              <button onClick={() => { playSound('magic'); onOpenPuzzle && onOpenPuzzle(); }}
-                className="w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-emerald-600 text-white rounded-xl py-2 px-3 text-xs sm:text-sm font-black transform hover:scale-105 active:scale-95 transition-all shadow-md border border-yellow-300 flex items-center justify-center gap-2"
-                style={{ fontFamily: "'Fredoka One', cursive" }}>
-                <span>🧩</span> <span>JUGAR ROMPECABEZAS DE {hero.name.toUpperCase()}</span>
+              <button
+                onClick={() => { playSound('magic'); onOpenPuzzle && onOpenPuzzle(); }}
+                className="w-full bg-gradient-to-r from-[#35206F] via-[#4B2C99] to-[#7AC943] text-white rounded-2xl py-2.5 px-3 text-xs sm:text-sm font-bold transform hover:scale-102 active:scale-98 transition-all shadow-md font-fredoka flex items-center justify-center gap-2"
+              >
+                <span>🧩</span> <span>¡JUGAR ROMPECABEZAS CON {hero.name.toUpperCase()}!</span>
               </button>
             )}
             {isDiplomaUnlocked && (
-              <button onClick={handleDownloadDiploma} disabled={downloadingDiploma}
-                className="w-full bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-amber-950 rounded-xl py-2 px-3 text-xs sm:text-sm font-black transform hover:scale-105 active:scale-95 transition-all shadow-md border border-white flex items-center justify-center gap-2"
-                style={{ fontFamily: "'Fredoka One', cursive" }}>
-                <span>📜</span> <span>{downloadingDiploma ? 'Generando diploma...' : '¡DESCARGAR DIPLOMA OFICIAL DE CAMPEÓN (PDF)!'}</span>
+              <button
+                onClick={handleDownloadDiploma}
+                disabled={downloadingDiploma}
+                className="w-full bg-gradient-to-r from-[#FFC928] via-[#FF8A25] to-[#7AC943] text-white rounded-2xl py-2.5 px-3 text-xs sm:text-sm font-bold transform hover:scale-102 active:scale-98 transition-all shadow-md font-fredoka flex items-center justify-center gap-2"
+              >
+                <span>📜</span> <span>{downloadingDiploma ? 'Generando diploma oficial...' : '¡DESCARGAR DIPLOMA OFICIAL KIDGENIUS CLUB (PDF)!'}</span>
               </button>
             )}
           </div>
         </div>
 
+        {/* 6 Math Game Modules Cards */}
         <div className="w-full max-w-4xl">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-5">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
             {gameCategories.map((cat, index) => {
               const eggsCount = activityEggs[cat.mode] || 0;
               const isUnlocked = eggsCount >= 5;
               return (
-                <button key={cat.mode} onClick={() => handleCategoryClick(cat)}
-                  className={`bg-gradient-to-br ${cat.color} rounded-2xl md:rounded-3xl p-4 md:p-5
-                    transform transition-all duration-300 hover:scale-105 active:scale-95 shadow-xl hover:shadow-2xl
-                    group relative overflow-hidden border-2 ${isUnlocked ? 'border-amber-300 ring-2 ring-yellow-300/80 shadow-amber-500/30' : 'border-white/20'}`}
-                  style={{ animation: `fadeInUp 0.5s ease-out ${index * 0.08}s both` }}>
+                <button
+                  key={cat.mode}
+                  onClick={() => handleCategoryClick(cat)}
+                  className={`bg-white rounded-3xl p-4 md:p-5
+                    transform transition-all duration-300 hover:scale-104 active:scale-96 shadow-kg hover:shadow-kg-lg
+                    group relative overflow-hidden border-2 ${isUnlocked ? 'border-[#7AC943] ring-2 ring-[#7AC943]/40' : 'border-[#FFC928]/30 hover:border-[#FFC928]'}`}
+                  style={{ animation: `fadeInUp 0.4s ease-out ${index * 0.06}s both` }}
+                >
                   {isUnlocked && (
-                    <div className="absolute top-2 right-2 bg-gradient-to-r from-amber-400 to-yellow-300 text-amber-950 font-black text-[9px] px-2 py-0.5 rounded-full shadow-lg border border-white animate-pulse">
-                      🔓 DESAFÍO VIP
+                    <div className="absolute top-2 right-2 bg-[#7AC943] text-white font-black text-[9px] px-2 py-0.5 rounded-full shadow-xs font-fredoka animate-pulse">
+                      🔓 RETO DOMINADO
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-all duration-300 rounded-2xl" />
+
                   <div className="relative text-center">
-                    <div className="text-3xl md:text-4xl mb-1 transform group-hover:scale-125 transition-transform duration-300">{cat.emoji}</div>
-                    <h3 className="text-base md:text-lg font-bold text-white drop-shadow-md mb-0.5" style={{ fontFamily: "'Fredoka One', cursive" }}>{cat.title}</h3>
-                    <p className="text-[10px] md:text-xs text-amber-100 font-semibold mb-1" style={{ fontFamily: "'Nunito', sans-serif" }}>{cat.description}</p>
-                    
-                    {/* Barra / contador de 5 Huevos para liberar nuevo desafío */}
-                    <div className="mt-1 flex items-center justify-center gap-1 bg-black/30 rounded-full px-2.5 py-0.5 border border-white/20">
+                    <div className="text-3xl md:text-4xl mb-1 transform group-hover:scale-115 transition-transform duration-300">{cat.emoji}</div>
+                    <h3 className="text-sm md:text-base font-bold text-[#35206F] mb-0.5 font-fredoka leading-tight">{cat.title}</h3>
+                    <p className="text-[10px] md:text-xs text-[#6B6280] font-semibold mb-2 font-nunito leading-tight">{cat.description}</p>
+
+                    <div className="inline-flex items-center justify-center gap-1.5 bg-[#FFF9EC] rounded-full px-3 py-0.5 border border-[#FFC928]/40">
                       <span className="text-xs">🥚</span>
-                      <span className="text-[11px] font-bold text-amber-200" style={{ fontFamily: "'Fredoka One', cursive" }}>
-                        {eggsCount}/5 {isUnlocked ? '🔓 Desbloqueado' : 'Huevos'}
+                      <span className="text-[11px] font-bold text-[#35206F] font-fredoka">
+                        {eggsCount}/5 {isUnlocked ? '🔓 Logrado' : 'Misiones'}
                       </span>
                     </div>
                   </div>
