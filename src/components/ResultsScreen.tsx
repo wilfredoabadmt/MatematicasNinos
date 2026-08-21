@@ -131,7 +131,7 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-[#FFF9EC] relative overflow-hidden flex items-center justify-center p-3 sm:p-5">
+    <div className="min-h-screen bg-[#FFF9EC] relative overflow-hidden flex items-center justify-center p-4 sm:p-6 text-[#241A3D]">
       {showConfetti && (
         <div className="fixed inset-0 pointer-events-none z-50">
           {[...Array(30)].map((_, i) => (
@@ -151,11 +151,11 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
         </div>
       )}
 
-      <div className="relative z-10 bg-white rounded-3xl shadow-kg-lg p-4 sm:p-7 max-w-lg w-full animate-[bounceIn_0.6s_ease-out] border-2 border-[#FFC928]/50">
-        <div className="flex justify-center mb-2">
+      <div className="relative z-10 bg-white rounded-3xl shadow-kg-lg p-5 sm:p-8 max-w-lg w-full animate-[bounceIn_0.6s_ease-out] border-2 border-[#FFC928]/60">
+        <div className="flex justify-center mb-3">
           <HeroAvatar
             heroId={hero.id}
-            size={95}
+            size={100}
             celebrating={percentage >= 50}
             sad={percentage < 50}
             talking={heroTalking}
@@ -163,17 +163,17 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
         </div>
 
         <div className="flex justify-center mb-2">
-          <span className="bg-[#35206F] text-white px-3.5 py-1 rounded-full text-xs font-bold font-fredoka shadow-xs">
+          <span className="bg-[#35206F] text-white px-4 py-1 rounded-full text-sm font-extrabold font-nunito shadow-xs">
             {hero.emoji} {hero.name}
           </span>
         </div>
 
         {/* Stars */}
-        <div className="flex justify-center gap-2 sm:gap-3 mb-2">
+        <div className="flex justify-center gap-3 mb-2">
           {[1, 2, 3].map(star => (
             <div
               key={star}
-              className={`text-3xl sm:text-4xl transition-all duration-700 ${
+              className={`text-4xl sm:text-5xl transition-all duration-700 ${
                 showStars >= star
                   ? 'scale-100 opacity-100 animate-[bounceIn_0.4s_ease-out]'
                   : 'scale-50 opacity-20 grayscale'
@@ -185,55 +185,55 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
           ))}
         </div>
 
-        <h2 className="text-base sm:text-lg font-bold text-center text-[#35206F] mb-1 font-fredoka">
+        <h2 className="text-lg sm:text-xl font-bold text-center text-[#35206F] mb-1 font-fredoka">
           {getMessage()}
         </h2>
 
         <button
           onClick={listenAgain}
-          className="mx-auto mb-3 flex items-center gap-1.5 bg-[#FFF9EC] hover:bg-[#FFF3D9] text-[#35206F] rounded-full px-3 py-1 text-xs font-bold border border-[#FFC928]/40 transition-all font-nunito"
+          className="mx-auto mb-4 flex items-center gap-2 bg-[#FFF9EC] hover:bg-[#FFF3D9] text-[#35206F] rounded-full px-4 py-1.5 text-xs sm:text-sm font-extrabold border-2 border-[#FFC928]/50 transition-all font-nunito shadow-2xs"
         >
           🔊 Escuchar a {hero.name.split(' ')[0]}
         </button>
 
-        <div className="grid grid-cols-2 gap-2 mb-3">
-          <div className="bg-[#FFF9EC] rounded-2xl p-2.5 text-center border border-[#FFC928]/30">
-            <p className="text-lg mb-0.5">✅</p>
-            <p className="text-base sm:text-lg font-bold text-[#35206F] font-fredoka">{correctAnswers}/{totalQuestions}</p>
-            <p className="text-[10px] font-semibold text-[#6B6280] font-nunito">Aciertos</p>
+        <div className="grid grid-cols-2 gap-2.5 mb-4">
+          <div className="bg-[#FFF9EC] rounded-2xl p-3 text-center border border-[#FFC928]/40 shadow-2xs">
+            <p className="text-xl mb-0.5">✅</p>
+            <p className="text-lg sm:text-xl font-bold text-[#35206F] font-fredoka">{correctAnswers}/{totalQuestions}</p>
+            <p className="text-xs font-bold text-[#554A6D] font-nunito">Aciertos</p>
           </div>
-          <div className="bg-[#FFF9EC] rounded-2xl p-2.5 text-center border border-[#FFC928]/30">
-            <p className="text-lg mb-0.5">🏆</p>
-            <p className="text-base sm:text-lg font-bold text-[#35206F] font-fredoka">{score}</p>
-            <p className="text-[10px] font-semibold text-[#6B6280] font-nunito">Puntos</p>
+          <div className="bg-[#FFF9EC] rounded-2xl p-3 text-center border border-[#FFC928]/40 shadow-2xs">
+            <p className="text-xl mb-0.5">🏆</p>
+            <p className="text-lg sm:text-xl font-bold text-[#35206F] font-fredoka">{score}</p>
+            <p className="text-xs font-bold text-[#554A6D] font-nunito">Puntos</p>
           </div>
-          <div className="bg-[#FFF9EC] rounded-2xl p-2.5 text-center border border-[#FFC928]/30">
-            <p className="text-lg mb-0.5">🔥</p>
-            <p className="text-base sm:text-lg font-bold text-[#35206F] font-fredoka">{bestStreak}</p>
-            <p className="text-[10px] font-semibold text-[#6B6280] font-nunito">Mejor Racha</p>
+          <div className="bg-[#FFF9EC] rounded-2xl p-3 text-center border border-[#FFC928]/40 shadow-2xs">
+            <p className="text-xl mb-0.5">🔥</p>
+            <p className="text-lg sm:text-xl font-bold text-[#35206F] font-fredoka">{bestStreak}</p>
+            <p className="text-xs font-bold text-[#554A6D] font-nunito">Mejor Racha</p>
           </div>
-          <div className="bg-[#FFF9EC] rounded-2xl p-2.5 text-center border border-[#FFC928]/30">
-            <p className="text-lg mb-0.5">📊</p>
-            <p className="text-base sm:text-lg font-bold text-[#35206F] font-fredoka">{percentage}%</p>
-            <p className="text-[10px] font-semibold text-[#6B6280] font-nunito">Precisión</p>
+          <div className="bg-[#FFF9EC] rounded-2xl p-3 text-center border border-[#FFC928]/40 shadow-2xs">
+            <p className="text-xl mb-0.5">📊</p>
+            <p className="text-lg sm:text-xl font-bold text-[#35206F] font-fredoka">{percentage}%</p>
+            <p className="text-xs font-bold text-[#554A6D] font-nunito">Precisión</p>
           </div>
         </div>
 
         {/* Bonus Unlocks in Results */}
-        <div className="space-y-2 mb-3">
+        <div className="space-y-2.5 mb-4">
           {isPDFUnlocked ? (
             <button
               onClick={handleDownloadPDF}
               disabled={downloadingPDF}
-              className="w-full bg-gradient-to-r from-[#FFC928] via-[#FF8A25] to-[#7AC943] text-white rounded-2xl py-2.5 px-3 text-xs sm:text-sm font-bold transform hover:scale-102 active:scale-98 transition-all shadow-md font-fredoka flex items-center justify-center gap-2"
+              className="w-full bg-gradient-to-r from-[#FFC928] via-[#FF8A25] to-[#7AC943] text-white rounded-2xl py-3 px-4 text-sm sm:text-base font-extrabold transform hover:scale-102 active:scale-98 transition-all shadow-md font-nunito flex items-center justify-center gap-2"
             >
               <span>🎨</span>
               <span>{downloadingPDF ? 'Generando lámina...' : `¡DESCARGAR LÁMINA DE ${hero.name.toUpperCase()} PARA COLOREAR!`}</span>
               <span>📄</span>
             </button>
           ) : (
-            <div className="w-full bg-[#FFF9EC] border border-[#FFC928]/40 rounded-2xl py-2 px-3 text-center">
-              <p className="text-[11px] font-bold text-[#35206F] font-fredoka">
+            <div className="w-full bg-[#FFF9EC] border border-[#FFC928]/50 rounded-2xl py-2.5 px-4 text-center">
+              <p className="text-xs sm:text-sm font-extrabold text-[#35206F] font-nunito">
                 🔒 Lámina para Colorear: junta 5 misiones ({currentModeEggs}/5)
               </p>
             </div>
@@ -243,7 +243,7 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
             <button
               onClick={handleDownloadDiploma}
               disabled={downloadingDiploma}
-              className="w-full bg-[#35206F] hover:bg-[#4B2C99] text-white rounded-2xl py-2.5 px-3 text-xs sm:text-sm font-bold transform hover:scale-102 active:scale-98 transition-all shadow-md font-fredoka flex items-center justify-center gap-2"
+              className="w-full bg-[#35206F] hover:bg-[#4B2C99] text-white rounded-2xl py-3 px-4 text-sm sm:text-base font-extrabold transform hover:scale-102 active:scale-98 transition-all shadow-md font-nunito flex items-center justify-center gap-2"
             >
               <span>📜</span>
               <span>{downloadingDiploma ? 'Generando diploma...' : '¡DESCARGAR DIPLOMA OFICIAL KIDGENIUS (PDF)!'}</span>
@@ -257,7 +257,7 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
                 playSound('magic');
                 onOpenPuzzle && onOpenPuzzle();
               }}
-              className="w-full bg-gradient-to-r from-[#35206F] to-[#7AC943] text-white rounded-2xl py-2.5 px-3 text-xs sm:text-sm font-bold transform hover:scale-102 active:scale-98 transition-all shadow-md font-fredoka flex items-center justify-center gap-2"
+              className="w-full bg-gradient-to-r from-[#35206F] to-[#7AC943] text-white rounded-2xl py-3 px-4 text-sm sm:text-base font-extrabold transform hover:scale-102 active:scale-98 transition-all shadow-md font-nunito flex items-center justify-center gap-2"
             >
               <span>🧩</span>
               <span>¡JUGAR ROMPECABEZAS CON {hero.name.toUpperCase()}!</span>
@@ -272,7 +272,7 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
               stopSpeaking();
               onPlayAgain();
             }}
-            className="w-full bg-[#7AC943] hover:bg-[#4F9A25] text-white rounded-2xl py-3 text-sm sm:text-base font-bold transform hover:scale-102 active:scale-98 transition-all shadow-md font-fredoka"
+            className="w-full bg-[#7AC943] hover:bg-[#4F9A25] text-white rounded-2xl py-3.5 text-base sm:text-lg font-extrabold transform hover:scale-102 active:scale-98 transition-all shadow-md font-nunito"
           >
             🔄 ¡Jugar otra misión de 15 min!
           </button>
@@ -282,7 +282,7 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({
               stopSpeaking();
               onBackToMenu();
             }}
-            className="w-full bg-white hover:bg-[#FFF3D9] text-[#35206F] rounded-2xl py-2.5 text-xs sm:text-sm font-bold border border-[#FFC928]/40 transition-all font-fredoka"
+            className="w-full bg-white hover:bg-[#FFF3D9] text-[#35206F] rounded-2xl py-3 text-sm sm:text-base font-extrabold border-2 border-[#FFC928]/50 transition-all font-nunito shadow-2xs"
           >
             🏠 Volver al menú KidGenius
           </button>

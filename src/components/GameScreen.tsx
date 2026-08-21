@@ -244,23 +244,23 @@ const GameScreen: React.FC<GameScreenProps> = ({
             <HeroAvatar heroId={hero.id} size={120} talking={heroTalking} />
           </div>
 
-          <div className="bg-white rounded-3xl p-6 shadow-kg border-2 border-[#FFC928]/50">
-            <div className="inline-flex items-center gap-1.5 bg-[#35206F] text-white px-3 py-0.5 rounded-full text-xs font-bold font-fredoka mb-2">
+          <div className="bg-white rounded-3xl p-6 sm:p-7 shadow-kg border-2 border-[#FFC928]/50">
+            <div className="inline-flex items-center gap-1.5 bg-[#35206F] text-white px-4 py-1 rounded-full text-xs sm:text-sm font-extrabold font-nunito mb-2.5">
               <span>🚀</span> <span>{modeNames[mode]}</span>
             </div>
 
-            <h2 className="text-xl font-bold text-[#35206F] font-fredoka mb-1">
+            <h2 className="text-2xl font-bold text-[#35206F] font-fredoka mb-1.5">
               ¡{hero.name} te explica la misión!
             </h2>
 
-            <p className="text-xs sm:text-sm text-[#241A3D] bg-[#FFF9EC] rounded-2xl p-3.5 mb-4 font-bold border border-[#FFC928]/40 leading-relaxed font-nunito text-left">
+            <p className="text-sm sm:text-base text-[#241A3D] bg-[#FFF9EC] rounded-2xl p-4 mb-5 font-bold border border-[#FFC928]/50 leading-relaxed font-nunito text-left">
               🔊 {message || 'Escuchando la lección de tu compañero...'}
             </p>
 
             <button
               onClick={handleStartQuestionsNow}
-              className="w-full bg-[#7AC943] hover:bg-[#4F9A25] text-white rounded-2xl py-3.5 px-4 text-base font-bold
-                transform hover:scale-102 active:scale-98 transition-all shadow-md font-fredoka
+              className="w-full bg-[#7AC943] hover:bg-[#4F9A25] text-white rounded-2xl py-3.5 px-4 text-base sm:text-lg font-extrabold
+                transform hover:scale-102 active:scale-98 transition-all shadow-md font-nunito
                 inline-flex items-center justify-center gap-2"
             >
               <span>🚀</span>
@@ -295,28 +295,28 @@ const GameScreen: React.FC<GameScreenProps> = ({
       )}
 
       {/* Top Navbar */}
-      <div className="relative z-10 w-full max-w-lg mx-auto flex flex-col gap-1.5">
+      <div className="relative z-10 w-full max-w-lg mx-auto flex flex-col gap-2">
         <div className="flex items-center justify-between">
           <button
             onClick={() => {
               stopSpeaking();
               onBackToMenu();
             }}
-            className="bg-white hover:bg-[#FFF3D9] text-[#35206F] rounded-full px-3 py-1 text-xs font-bold transition-all border border-[#FFC928]/40 shadow-2xs font-fredoka"
+            className="bg-white hover:bg-[#FFF3D9] text-[#35206F] rounded-full px-4 py-1.5 text-xs sm:text-sm font-extrabold transition-all border-2 border-[#FFC928]/50 shadow-2xs font-nunito"
           >
             ← Menú KidGenius
           </button>
 
-          <div className="flex items-center gap-1.5 bg-[#FFC928] text-[#35206F] rounded-full px-3 py-1 border border-white font-fredoka text-xs font-bold shadow-2xs">
+          <div className="flex items-center gap-1.5 bg-[#FFC928] text-[#35206F] rounded-full px-3.5 py-1 border border-white font-nunito text-xs sm:text-sm font-extrabold shadow-2xs">
             <span>🏆</span>
             <span>{score} Puntos</span>
           </div>
 
-          <div className="flex items-center gap-0.5">
+          <div className="flex items-center gap-1">
             {[...Array(INITIAL_LIVES)].map((_, i) => (
               <span
                 key={i}
-                className={`text-lg transition-all duration-300 ${i < lives ? 'scale-100' : 'scale-50 opacity-20 grayscale'}`}
+                className={`text-xl transition-all duration-300 ${i < lives ? 'scale-100' : 'scale-50 opacity-20 grayscale'}`}
               >
                 ❤️
               </span>
@@ -325,17 +325,17 @@ const GameScreen: React.FC<GameScreenProps> = ({
         </div>
 
         {/* Progress bar */}
-        <div className="w-full bg-[#FFF3D9] rounded-full h-2.5 overflow-hidden border border-[#FFC928]/30">
+        <div className="w-full bg-[#FFF3D9] rounded-full h-3 overflow-hidden border border-[#FFC928]/40">
           <div
             className="h-full bg-gradient-to-r from-[#FFC928] to-[#7AC943] rounded-full transition-all duration-500"
             style={{ width: `${progress}%` }}
           />
         </div>
 
-        <div className="flex justify-between items-center text-[11px] font-bold text-[#6B6280] font-nunito">
+        <div className="flex justify-between items-center text-xs sm:text-sm font-extrabold text-[#554A6D] font-nunito">
           <span>Pregunta {currentQ + 1}/{TOTAL_QUESTIONS} • {modeNames[mode]}</span>
           {streak >= 2 && (
-            <span className="bg-[#FF8A25] text-white rounded-full px-2.5 py-0.5 text-[10px] font-fredoka animate-bounce shadow-2xs">
+            <span className="bg-[#FF8A25] text-white rounded-full px-3 py-0.5 text-xs font-extrabold font-nunito animate-bounce shadow-2xs">
               🔥 Racha x{streak}!
             </span>
           )}
@@ -345,12 +345,12 @@ const GameScreen: React.FC<GameScreenProps> = ({
       {/* Main Play Area */}
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center max-w-lg mx-auto w-full my-auto">
         {/* Companion Avatar & Speech Bubble */}
-        <div className="flex items-center gap-2.5 mb-2.5 w-full">
+        <div className="flex items-center gap-3 mb-3 w-full">
           <div className="flex-shrink-0 relative">
             <div className="bg-white p-1 rounded-2xl shadow-xs border-2 border-[#FFC928]/40">
               <HeroAvatar
                 heroId={hero.id}
-                size={75}
+                size={80}
                 talking={heroTalking}
                 celebrating={isCorrect === true}
                 sad={isCorrect === false}
@@ -360,7 +360,7 @@ const GameScreen: React.FC<GameScreenProps> = ({
 
           <div className="flex-1 relative">
             <div
-              className={`bg-white rounded-2xl rounded-bl-xs px-3.5 py-2 shadow-xs border-2 transition-all
+              className={`bg-white rounded-2xl rounded-bl-xs px-4 py-2.5 shadow-xs border-2 transition-all
               ${
                 showMessage
                   ? isCorrect
@@ -371,8 +371,8 @@ const GameScreen: React.FC<GameScreenProps> = ({
                   : 'border-[#FFC928]/50'
               }`}
             >
-              <p className="text-xs sm:text-sm font-bold text-[#241A3D] leading-snug font-nunito">
-                {heroTalking && <span className="text-[#FF8A25] mr-1 animate-pulse">🔊</span>}
+              <p className="text-sm sm:text-base font-bold text-[#241A3D] leading-snug font-nunito">
+                {heroTalking && <span className="text-[#FF8A25] mr-1.5 animate-pulse">🔊</span>}
                 {showMessage ? (
                   <span className={isCorrect === true ? 'text-[#4F9A25]' : isCorrect === false ? 'text-red-600' : 'text-[#241A3D]'}>
                     {isCorrect === true ? '✅ ' : isCorrect === false ? '💡 ' : ''}
@@ -384,16 +384,16 @@ const GameScreen: React.FC<GameScreenProps> = ({
               </p>
             </div>
 
-            <div className="flex gap-1.5 mt-1.5">
+            <div className="flex gap-2 mt-2">
               <button
                 onClick={handleRepeat}
-                className="bg-white hover:bg-[#FFF3D9] text-[#35206F] rounded-full px-2.5 py-0.5 text-[11px] font-bold border border-[#FFC928]/40 font-fredoka flex items-center gap-1 shadow-2xs"
+                className="bg-white hover:bg-[#FFF3D9] text-[#35206F] rounded-full px-3.5 py-1 text-xs sm:text-sm font-extrabold border-2 border-[#FFC928]/50 font-nunito flex items-center gap-1 shadow-2xs"
               >
                 🔊 Repetir
               </button>
               <button
                 onClick={handleTeachMe}
-                className="bg-[#FFC928] hover:bg-[#E0A800] text-[#35206F] rounded-full px-2.5 py-0.5 text-[11px] font-bold font-fredoka flex items-center gap-1 shadow-2xs"
+                className="bg-[#FFC928] hover:bg-[#E0A800] text-[#35206F] rounded-full px-3.5 py-1 text-xs sm:text-sm font-extrabold font-nunito flex items-center gap-1 shadow-2xs"
               >
                 💡 ¡Pista!
               </button>
@@ -403,11 +403,11 @@ const GameScreen: React.FC<GameScreenProps> = ({
 
         {/* Visual Count Figures */}
         {question.visual && (
-          <div className="bg-white border-2 border-[#FFC928]/40 rounded-2xl px-4 py-2 mb-2 w-full text-center shadow-xs animate-[fadeIn_0.3s_ease-out]">
-            <p className="text-[11px] text-[#6B6280] font-bold mb-0.5 font-nunito">
+          <div className="bg-white border-2 border-[#FFC928]/40 rounded-2xl px-5 py-2.5 mb-2.5 w-full text-center shadow-xs animate-[fadeIn_0.3s_ease-out]">
+            <p className="text-xs sm:text-sm text-[#554A6D] font-extrabold mb-1 font-nunito">
               ✨ ¡Cuenta las figuras para responder con facilidad!
             </p>
-            <p className="text-xl sm:text-2xl font-bold leading-snug text-[#35206F] tracking-widest font-fredoka">
+            <p className="text-2xl sm:text-3xl font-bold leading-snug text-[#35206F] tracking-widest font-fredoka">
               {question.visual}
             </p>
           </div>
@@ -415,22 +415,22 @@ const GameScreen: React.FC<GameScreenProps> = ({
 
         {/* Question Card */}
         <div
-          className={`bg-white rounded-3xl shadow-kg p-4 sm:p-5 w-full mb-3 text-center relative overflow-hidden transition-all
+          className={`bg-white rounded-3xl shadow-kg p-5 sm:p-6 w-full mb-3.5 text-center relative overflow-hidden transition-all
           ${shakeWrong ? 'animate-[shake_0.5s_ease-in-out]' : 'animate-[fadeInUp_0.3s_ease-out]'}
           border-3 ${isCorrect === true ? 'border-[#7AC943]' : isCorrect === false ? 'border-red-400' : 'border-[#FFC928]/50'}`}
         >
-          <span className="text-2xl sm:text-3xl mb-0.5 block">{question.emoji}</span>
-          <h2 className="text-3xl sm:text-5xl font-bold text-[#35206F] font-fredoka leading-tight">
+          <span className="text-3xl sm:text-4xl mb-1 block">{question.emoji}</span>
+          <h2 className="text-4xl sm:text-5xl font-bold text-[#35206F] font-fredoka leading-tight">
             {question.question}
           </h2>
         </div>
 
         {/* Answer Options */}
-        <div className="grid grid-cols-2 gap-2.5 sm:gap-3 w-full">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 w-full">
           {question.options.map((option, index) => {
             const isSelected = selectedAnswer === option;
             const isCorrectAnswer = option === question.correctAnswer;
-            let btnStyle = 'bg-white hover:bg-[#FFF3D9] text-[#35206F] border-2 border-[#FFC928]/50 hover:border-[#7AC943] hover:scale-103';
+            let btnStyle = 'bg-white hover:bg-[#FFF3D9] text-[#35206F] border-2 border-[#FFC928]/60 hover:border-[#7AC943] hover:scale-103';
             if (selectedAnswer !== null) {
               if (isCorrectAnswer) btnStyle = 'bg-[#7AC943] text-white scale-103 border-2 border-white ring-4 ring-[#7AC943]/40';
               else if (isSelected) btnStyle = 'bg-red-500 text-white scale-97 border-2 border-white ring-4 ring-red-300';
@@ -441,11 +441,11 @@ const GameScreen: React.FC<GameScreenProps> = ({
                 key={index}
                 onClick={() => handleAnswer(option)}
                 disabled={selectedAnswer !== null || waiting}
-                className={`${btnStyle} rounded-2xl py-3.5 sm:py-4 px-2 text-2xl sm:text-3xl font-bold shadow-xs transform transition-all duration-200 active:scale-95 disabled:cursor-not-allowed font-fredoka relative`}
+                className={`${btnStyle} rounded-2xl py-4 sm:py-5 px-3 text-3xl sm:text-4xl font-bold shadow-xs transform transition-all duration-200 active:scale-95 disabled:cursor-not-allowed font-fredoka relative`}
                 style={{ animation: `fadeInUp 0.3s ease-out ${index * 0.06}s both` }}
               >
-                {isCorrectAnswer && selectedAnswer !== null && <span className="absolute top-1 right-2 text-sm">✅</span>}
-                {isSelected && !isCorrectAnswer && selectedAnswer !== null && <span className="absolute top-1 right-2 text-sm">❌</span>}
+                {isCorrectAnswer && selectedAnswer !== null && <span className="absolute top-2 right-3 text-base">✅</span>}
+                {isSelected && !isCorrectAnswer && selectedAnswer !== null && <span className="absolute top-2 right-3 text-base">❌</span>}
                 {option}
               </button>
             );
@@ -454,7 +454,7 @@ const GameScreen: React.FC<GameScreenProps> = ({
       </div>
 
       {/* Footer hint */}
-      <div className="relative z-10 text-center text-[11px] text-[#6B6280] font-semibold font-nunito mt-1">
+      <div className="relative z-10 text-center text-xs text-[#554A6D] font-bold font-nunito mt-1">
         KidGenius Club • Práctica deliberada con refuerzo positivo
       </div>
     </div>

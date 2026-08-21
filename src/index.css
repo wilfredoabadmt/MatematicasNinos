@@ -14,9 +14,9 @@
   --kg-crema: #FFF9EC;
   --kg-crema-2: #FFF3D9;
   --kg-ink: #241A3D;
-  --kg-gray: #6B6280;
-  --kg-shadow: 0 12px 30px rgba(53, 32, 111, 0.12);
-  --kg-shadow-lg: 0 18px 40px rgba(53, 32, 111, 0.18);
+  --kg-gray: #554A6D;
+  --kg-shadow: 0 10px 25px rgba(53, 32, 111, 0.10);
+  --kg-shadow-lg: 0 16px 36px rgba(53, 32, 111, 0.16);
   --kg-radius: 20px;
   --kg-radius-lg: 28px;
 }
@@ -25,7 +25,7 @@
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(25px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -36,7 +36,7 @@
 @keyframes fadeInDown {
   from {
     opacity: 0;
-    transform: translateY(-25px);
+    transform: translateY(-20px);
   }
   to {
     opacity: 1;
@@ -52,14 +52,14 @@
 @keyframes bounceIn {
   0% {
     opacity: 0;
-    transform: scale(0.3);
+    transform: scale(0.4);
   }
-  50% {
+  60% {
     opacity: 1;
-    transform: scale(1.06);
+    transform: scale(1.05);
   }
-  70% {
-    transform: scale(0.95);
+  80% {
+    transform: scale(0.96);
   }
   100% {
     transform: scale(1);
@@ -85,18 +85,13 @@
 
 @keyframes wiggle {
   0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(-5deg) scale(1.05); }
-  75% { transform: rotate(5deg) scale(1.05); }
+  25% { transform: rotate(-4deg) scale(1.04); }
+  75% { transform: rotate(4deg) scale(1.04); }
 }
 
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-}
-
-@keyframes pulseGlow {
-  0%, 100% { transform: scale(1); filter: drop-shadow(0 4px 12px rgba(122, 201, 67, 0.4)); }
-  50% { transform: scale(1.03); filter: drop-shadow(0 8px 24px rgba(255, 201, 40, 0.7)); }
+  50% { transform: translateY(-6px); }
 }
 
 /* Global styles & Mobile responsiveness */
@@ -116,10 +111,11 @@ html, body, #root {
 }
 
 body {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   padding-top: env(safe-area-inset-top, 0px);
   padding-bottom: env(safe-area-inset-bottom, 0px);
   padding-left: env(safe-area-inset-left, 0px);
@@ -161,15 +157,17 @@ button:active {
   color: var(--kg-morado);
 }
 
-/* KidGenius Utility Classes */
+/* Typography Classes */
 .font-fredoka {
-  font-family: 'Fredoka', cursive, sans-serif;
+  font-family: 'Fredoka', 'Nunito', sans-serif;
+  letter-spacing: 0.015em;
 }
 
 .font-nunito {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
+/* KidGenius Utility Classes */
 .bg-kg-crema {
   background-color: var(--kg-crema);
 }
